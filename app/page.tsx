@@ -77,6 +77,7 @@ const plans = [
   {
     name: "Invitation",
     price: 12,
+    image: "https://images.unsplash.com/photo-1595113316349-9fa4eb24f884?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
     features: [
       "Appeal",
       "Bid",
@@ -91,6 +92,7 @@ const plans = [
   {
     name: "Accreditation",
     price: 35,
+    image: "https://images.unsplash.com/photo-1592347093417-0e95eb5851aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
     features: [
       "Authorization",
       "Card",
@@ -111,6 +113,7 @@ export default async function Index() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
 
   // Fetching all places
 
@@ -213,22 +216,22 @@ export default async function Index() {
                   Dashboard
                 </h3>
                 <div className='mt-3 max-w-xl'>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam efficitur consequat nunc.
-                  </p>
+                  <h1>
+                    Welcome to iProtocol
+                  </h1>
                 </div>
               </div>
               <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2'>
                 {
                   plans.map((item, idx) => (
-                    <div key={idx} className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2'>
+                    <div key={idx} className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2' style={{ backgroundImage: `url(${item.image})` }}>
                       <div>
                         <span className='text-indigo-600 font-medium'>
                           {item.name}
                         </span>
                       </div>
                       <ul className='py-8 space-y-3'>
-                        {
+                        {/* {
                           item.features.map((featureItem, idx) => (
                             <li key={idx} className='flex items-center gap-5'>
                               <svg
@@ -244,7 +247,7 @@ export default async function Index() {
                               {featureItem}
                             </li>
                           ))
-                        }
+                        } */}
                       </ul>
                       <div className="flex-1 flex items-end">
                         <Link href="/events" className="w-full">
