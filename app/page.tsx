@@ -1,9 +1,11 @@
-
-
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import LogoutButton from '../components/LogoutButton'
+
+import { useStore } from '@/src/store';
+import { NavigationClientComponent } from '@/components/NavigationClientComponent';
+import StoreInitializer from '@/components/StoreInitializer';
 
 export const dynamic = 'force-dynamic'
 
@@ -101,6 +103,8 @@ const plans = [
   },
 ];
 
+
+
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
 
@@ -108,24 +112,32 @@ export default async function Index() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // const place = await supabase.rpc('getdistinctplaces');
-
-  // const place = await supabase.rpc('getplaces');
-
-  // const place = await supabase.from('events').select('place, function(array_agg, title) as event_titles');
-
-  // const place = await supabase.from('events').selectDistinct('title');
+  // Fetching all places
 
   const places = await supabase.from('getplaces').select();
-  const allPlaces = places.data;
+  const allPlaces = places.data ?? [];
+
+  if (allPlaces !== undefined && allPlaces?.length > 1) {
+
+    useStore.setState({ name: "Laurent" });
+    useStore.setState({ place: allPlaces });
+
+  }
+
+  // Fetching all events
 
   const events = await supabase.from('getevents').select();
-  const allEvents = events.data;
+  const allEvents = events.data ?? [];
 
-  console.log('Show us all the events: ', allEvents);
+  if (allEvents !== undefined && allEvents?.length > 1) {
+    useStore.setState({ event: allEvents });
+  }
+
+  const allEventsToDisplay = useStore.getState().event;
 
   return (
     <>
+      <StoreInitializer name={"Laurent"} place={allPlaces} />
       <div className="w-full flex flex-col items-center">
 
         <nav className="bg-white border-b w-full md:static md:text-sm md:border-none">
@@ -140,6 +152,7 @@ export default async function Index() {
                 />
               </a>
               <div className="md:hidden">
+
                 <button className="text-gray-500 hover:text-gray-800"
                 >
                   {
@@ -150,6 +163,7 @@ export default async function Index() {
                     )
                   }
                 </button>
+
               </div>
             </div>
             <div className={`flex-1 pb-3 mt-8 md:block md:pb-0 md:mt-0 ${'block'}`}>
@@ -249,71 +263,15 @@ export default async function Index() {
           :
           (
             <div className="w-full flex flex-col items-center">
-              <section className="py-28" style={{ background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.17) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)", width: "-webkit-fill-available" }}>
-                <div className="max-w-screen-xl mx-auto px-4 md:text-center md:px-8">
-                  <div className="max-w-xl space-y-3 md:mx-auto">
-                    <p className="text-gray-800 text-3xl font-semibold sm:text-4xl">
-                      Program of the papal visit
-                    </p>
-                    <p className="text-gray-600">
-                      Always arrive 2 hours before
-                    </p>
-                  </div>
 
-                  <div className="mt-4">
-                    {
-                      allPlaces?.map((items, key) => (
-
-                        <a className="inline-block py-2 px-4 mr-2 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
-                          {items.place}
-                        </a>
-
-                      ))
-                    }
-
-                    {/* <a href="javascript:void(0)" className="inline-block py-2 px-4 mr-2 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
-                      Kinshasa
-                    </a>
-
-                    <a href="javascript:void(0)" className="inline-block py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
-                      Lubumbashi
-                    </a> */}
-
-                  </div>
-
-                </div>
-              </section>
+              <NavigationClientComponent />
 
               <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">
                 <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                  {/* {
-                    posts.map((items, key) => (
-                      <article className="max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm" key={key}>
-                        <a href={items.href}>
-                          <img src={items.img} loading="lazy" alt={items.title} className="w-full h-48 rounded-t-md" />
-                          <div className="flex items-center mt-2 pt-3 ml-4 mr-2">
-                            <div className="flex-none w-10 h-10 rounded-full">
-                              <img src={items.authorLogo} className="w-full h-full rounded-full" alt={items.authorName} />
-                            </div>
-                            <div className="ml-3">
-                              <span className="block text-gray-900">{items.authorName}</span>
-                              <span className="block text-gray-400 text-sm">{items.date}</span>
-                            </div>
-                          </div>
-                          <div className="pt-3 ml-4 mr-2 mb-3">
-                            <h3 className="text-xl text-gray-900">
-                              {items.title}
-                            </h3>
-                            <p className="text-gray-400 text-sm mt-1">{items.desc}</p>
-                          </div>
-                        </a>
-                      </article>
-                    ))
-                  } */}
 
                   {
-                    allEvents?.map((items, key) => (
-                      <article className="max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm" key={key} style={{ width: "-webkit-fill-available", cursor: "pointer"}}>
+                    allEventsToDisplay?.map((items: any, key: any) => (
+                      <article className="max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm" key={key} style={{ width: "-webkit-fill-available", cursor: "pointer" }}>
                         <a href={items.href}>
                           <img src={items.eventpicture} loading="lazy" alt={items.title} className="w-full h-80 rounded-t-md" />
                           <div className="flex items-center mt-2 pt-3 ml-4 mr-2">
