@@ -1,8 +1,18 @@
+'use client'
+
+import { useStore } from "@/src/store";
 import Link from "next/link";
 
 
 
 export default function AuthenticatedUserDashboardContent({ plans }: { plans: any }) {
+
+    function chooseReservationType(reservationType: any) {
+        useStore.setState((state) => ({
+            chosenReservationType: reservationType
+        }))
+    }
+
     return (
         <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2'>
             {
@@ -16,8 +26,8 @@ export default function AuthenticatedUserDashboardContent({ plans }: { plans: an
                         <ul className='py-8 space-y-3'>
                         </ul>
                         <div className="flex-1 flex items-end">
-                            <Link href="/events" className="w-full">
-                                <button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700' style={{ cursor: "pointer" }}>
+                            <Link href="/events" className="w-full" onClick={() => chooseReservationType(item.name)}>
+                                <button className='px-3 py-3 rounded-lg w-full font-semibold text-sm duration-150 text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700' style={{ cursor: "pointer" }} >
                                     Choose
                                 </button>
                             </Link>
