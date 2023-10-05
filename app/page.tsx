@@ -129,6 +129,16 @@ export default async function Index() {
 
   }
 
+  // Fetching Goma place
+
+  const gomaPlaces = await supabase.from('place_in_goma_view').select();
+  const allGomaPlaces = gomaPlaces.data ?? [];
+
+  // Fetching Kinshasa place
+
+  const kinshasaPlaces = await supabase.from('place_in_kinshasa_view').select();
+  const allKinshasaPlaces = kinshasaPlaces.data ?? [];
+
   // Fetching all events
   const events = await supabase.from('getevents').select();
   const allEvents = events.data ?? [];
@@ -141,7 +151,7 @@ export default async function Index() {
 
   return (
     <>
-      <StoreInitializer name={"Laurent"} place={allPlaces} />
+      <StoreInitializer name={"Laurent"} place={allPlaces} event={allEventsToDisplay} />
 
       <div className="w-full flex flex-col items-center">
         <NavigationBar navigation={navigation} user={user} />
@@ -152,7 +162,7 @@ export default async function Index() {
           )
           :
           (
-            <UnauthenticatedUser allEventsToDisplay={allEventsToDisplay} />
+            <UnauthenticatedUser allEventsToDisplay={allEventsToDisplay} allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />
           )}
       </div>
 
