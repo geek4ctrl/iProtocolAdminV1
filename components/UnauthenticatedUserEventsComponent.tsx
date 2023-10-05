@@ -1,11 +1,18 @@
+"use client"
+
+import { useStore } from "@/src/store"
+
 
 export default function UnauthenticatedUserEventsComponent({ allEventsToDisplay }: { allEventsToDisplay: any }) {
+
+    const allEventsToDisplayHere = useStore((state) => state.event)
+
     return (
         <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">
             <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
 
                 {
-                    allEventsToDisplay?.map((items: any, key: any) => (
+                    allEventsToDisplayHere?.map((items: any, key: any) => (
                         <article className="max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm" key={key} style={{ width: "-webkit-fill-available", cursor: "pointer" }}>
                             <a href={items.href}>
                                 <img src={items.eventpicture} loading="lazy" alt={items.title} className="w-full h-80 rounded-t-md" />
