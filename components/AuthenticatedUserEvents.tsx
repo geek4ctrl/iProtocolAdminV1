@@ -1,8 +1,12 @@
+'use client'
+
+import { useStore } from "@/src/store";
 import Link from "next/link";
 
 
 export default function AuthenticatedUserEvents({ allEvents }: { allEvents: any }) {
 
+    const allEventsToDisplayHere = useStore((state) => state.event) ? useStore((state) => state.event) : allEvents
     return (
         <section className="py-28">
             <div className="max-w-screen-lg mx-auto px-4 md:px-8">
@@ -12,7 +16,7 @@ export default function AuthenticatedUserEvents({ allEvents }: { allEvents: any 
                 </div>
                 <ul className="mt-12 divide-y space-y-3">
                     {
-                        allEvents?.map((item: any, idx: any) => (
+                        allEventsToDisplayHere?.map((item: any, idx: any) => (
                             <li key={idx} className="px-4 py-5 duration-150 hover:border-white hover:rounded-xl hover:bg-gray-50">
                                 <a href="" className="space-y-3">
                                     <div className="flex items-center gap-x-3">
