@@ -1,7 +1,9 @@
+import AuthenticatedUserEvents from "@/components/AuthenticatedUserEvents";
 import BackButton from "@/components/BackButton";
 import LogoutButton from "@/components/LogoutButton";
 import NavigationBar from "@/components/NavigationBar";
 import { NavigationClientComponent } from "@/components/NavigationClientComponent";
+import UnauthenticatedUserEventsComponent from "@/components/UnauthenticatedUserEventsComponent";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
@@ -20,6 +22,18 @@ export default async function Index() {
 
     console.log('Show me all the events: ', events);
 
+    // Fetching Goma place
+
+    const gomaPlaces = await supabase.from('place_in_goma_view').select();
+    const allGomaPlaces = gomaPlaces.data ?? [];
+
+    // Fetching Kinshasa place
+
+    const kinshasaPlaces = await supabase.from('place_in_kinshasa_view').select();
+    const allKinshasaPlaces = kinshasaPlaces.data ?? [];
+
+    const allEventsToDisplay = allEvents
+
     const {
         data: { user },
     } = await supabase.auth.getUser()
@@ -29,12 +43,11 @@ export default async function Index() {
             <div className="w-full flex flex-col items-center">
 
                 <NavigationBar navigation={navigation} user={user} />
-
                 <BackButton />
+                <NavigationClientComponent allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />
+                <AuthenticatedUserEvents allEvents={allEvents} />
 
-                <NavigationClientComponent />
-
-                <section className="py-28">
+                {/* <section className="py-28">
                     <div className="max-w-screen-lg mx-auto px-4 md:px-8">
                         <div className="max-w-md">
                             <h1 className="text-gray-800 text-2xl font-extrabold sm:text-3xl">All Events</h1>
@@ -88,7 +101,7 @@ export default async function Index() {
                             }
                         </ul>
                     </div>
-                </section>
+                </section> */}
 
             </div>
         </>
