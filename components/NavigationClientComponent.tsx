@@ -3,19 +3,34 @@
 import { useStore } from "@/src/store"
 
 
-export function NavigationClientComponent() {
+export function NavigationClientComponent({ allGomaPlaces, allKinshasaPlaces }: { allGomaPlaces: any, allKinshasaPlaces: any }) {
 
     // const places = await supabase.from('getplaces').select();
     // const allPlaces = places.data;
 
     const { name } = useStore();
     const allPlaces = useStore((state) => state.place)
+    const allEvents = useStore((state) => state.event)
+
 
     //  const allPlaces = useStore.getState().place;
     // const name = useStore.getState().name;
 
     // console.log('Dang place!', allPlaces)
     // console.log('Dang name: ', name)
+
+
+    function choosePlace(place: any) {
+        if (place == 'Goma') {
+            useStore.setState((state) => ({
+                event: allGomaPlaces
+            }))
+        } else {
+            useStore.setState((state) => ({
+                event: allKinshasaPlaces
+            }))
+        }
+    }
 
     return (
         <section className="py-28" style={{ background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.17) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)", width: "-webkit-fill-available" }}>
@@ -33,7 +48,7 @@ export function NavigationClientComponent() {
                     {
                         allPlaces?.map((items: any, key: any) => (
 
-                            <a className="inline-block py-2 px-4 mr-2 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none">
+                            <a className="inline-block py-2 px-4 mr-2 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-lg shadow-md hover:shadow-none" onClick={() => choosePlace(items.place)}>
                                 {items.place}
                             </a>
 
