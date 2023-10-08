@@ -1,4 +1,4 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createRouteHandlerClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import LogoutButton from '../components/LogoutButton'
@@ -9,8 +9,13 @@ import FooterComponent from '@/components/FooterComponent';
 import UnauthenticatedUser from '@/components/UnauthenticatedUser';
 import NavigationBar from '@/components/NavigationBar';
 import AuthenticatedUserDashboard from '@/components/AuthenticatedUserDashboard';
+import { NextResponse } from 'next/server';
+import AuthenticatedUserRegistrationClientComponent from '@/components/AuthenticatedUserRegistrationClientComponent';
 
 export const dynamic = 'force-dynamic'
+
+const publicSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const publicSupabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 const navigation = [
   { title: "Francais", path: "javascript:void(0)" },
@@ -109,6 +114,77 @@ const plans = [
 ];
 
 
+// Added recently
+
+export async function POST(request: Request) {
+  const requestUrl = new URL(request.url)
+  const formData = await request.formData()
+
+  const title = String(formData.get('title'))
+  const firstname = String(formData.get('firstname'))
+  const surname = String(formData.get('surname'))
+  const postname = String(formData.get('postname'))
+  const email = String(formData.get('email'))
+  const category = String(formData.get('category'))
+  const diocese = String(formData.get('diocese'))
+  const uploadpicture = String(formData.get('uploadpicture'))
+  const uploaddocument = String(formData.get('uploaddocument'))
+
+  const supabase = createRouteHandlerClient({ cookies })
+
+  console.log('Show me the form object: ', {
+    title,
+    firstname,
+    surname,
+    postname,
+    category,
+    diocese,
+    uploadpicture,
+    uploaddocument,
+  })
+}
+
+interface Title {
+  value: string;
+  viewValue: string;
+}
+
+interface Designation {
+  value: string;
+  viewValue: string;
+}
+
+const userTitle: Title[] = [
+  { value: 'cardinal', viewValue: 'Steak' },
+  { value: 'monseigneur', viewValue: 'Pizza' },
+  { value: 'excellence', viewValue: 'Tacos' },
+  { value: 'honorable', viewValue: 'Pizza' },
+  { value: 'abbe', viewValue: 'Tacos' },
+  { value: 'pere', viewValue: 'Pizza' },
+  { value: 'soeur', viewValue: 'Tacos' },
+  { value: 'frere', viewValue: 'Pizza' },
+  { value: 'mr', viewValue: 'Tacos' },
+  { value: 'mme', viewValue: 'Pizza' },
+  { value: 'mlle', viewValue: 'Tacos' },
+];
+
+const userDesignation: Designation[] = [
+  { value: 'corpsMedical', viewValue: 'Steak' },
+  { value: 'agentPresse', viewValue: 'Pizza' },
+  { value: 'securite', viewValue: 'Tacos' },
+  { value: 'officielGouvernementC1', viewValue: 'Pizza' },
+  { value: 'officielGouvernementC2', viewValue: 'Tacos' },
+  { value: 'officielGouvernementC3', viewValue: 'Tacos' },
+  { value: 'officielEcclesialC1', viewValue: 'Pizza' },
+  { value: 'officielEcclesialC2', viewValue: 'Tacos' },
+  { value: 'liturgieConcelebrant', viewValue: 'Pizza' },
+  { value: 'liturgieC1', viewValue: 'Pizza' },
+  { value: 'liturgieC2', viewValue: 'Pizza' },
+  { value: 'personnesAssistees', viewValue: 'Pizza' },
+  { value: 'religieux', viewValue: 'Tacos' },
+  { value: 'staff', viewValue: 'Pizza' },
+  { value: 'protocol', viewValue: 'Pizza' },
+];
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
@@ -129,15 +205,16 @@ export default async function Index() {
 
   }
 
-  // Fetching Goma place
 
+  // Fetching Goma place
   const gomaPlaces = await supabase.from('place_in_goma_view').select();
   const allGomaPlaces = gomaPlaces.data ?? [];
 
-  // Fetching Kinshasa place
 
+  // Fetching Kinshasa place
   const kinshasaPlaces = await supabase.from('place_in_kinshasa_view').select();
   const allKinshasaPlaces = kinshasaPlaces.data ?? [];
+
 
   // Fetching all events
   const events = await supabase.from('getevents').select();
@@ -149,6 +226,11 @@ export default async function Index() {
 
   const allEventsToDisplay = useStore.getState().event;
 
+  let { data: users, error } = await supabase
+    .from('users')
+    .select("*")
+    .eq('email', `${user?.email}`)
+
   return (
     <>
       <StoreInitializer name={"Laurent"} place={allPlaces} event={allEventsToDisplay} />
@@ -158,7 +240,11 @@ export default async function Index() {
 
         {user ?
           (
-            <AuthenticatedUserDashboard plans={plans} />
+            <div>
+              {users ? (<AuthenticatedUserDashboard plans={plans} />) : (<AuthenticatedUserRegistrationClientComponent userTitle={userTitle} userDesignation={userDesignation} user={user} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />)}
+
+              {/* {users ? (<AuthenticatedUserRegistrationClientComponent userTitle={userTitle} userDesignation={userDesignation} user={user} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />) : (<AuthenticatedUserDashboard plans={plans} />)} */}
+            </div>
           )
           :
           (
