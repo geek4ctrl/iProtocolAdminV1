@@ -14,10 +14,10 @@ export default function AuthenticatedUserDashboardContent({ plans }: { plans: an
     }
 
     return (
-        <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2'>
+        <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2' style={{ display: "flex" }}>
             {
                 plans.map((item: any, idx: any) => (
-                    <div key={idx} className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2' style={{ backgroundImage: `url(${item.image})` }}>
+                    <div key={idx} className='relative flex-1 flex items-stretch flex-col p-8 rounded-xl border-2' style={{ backgroundImage: `url(${item.image})`, width: "10rem", padding: "2rem", textAlign: "center", borderRadius: "15px", marginTop: "5rem" }}>
                         <div>
                             <span className='text-indigo-600 font-medium'>
                                 {item.name}
