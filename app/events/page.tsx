@@ -14,6 +14,9 @@ const navigation = [
     { title: "Italien", path: "javascript:void(0)" },
 ];
 
+const publicSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const publicSupabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
 export default async function Index() {
     const supabase = createServerComponentClient({ cookies });
 
@@ -45,7 +48,9 @@ export default async function Index() {
                 <NavigationBar navigation={navigation} user={user} />
                 <BackButton />
                 <NavigationClientComponent allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />
-                <AuthenticatedUserEvents allEvents={allEvents} />
+
+                {/* @ts-expect-error Server Component */}
+                <AuthenticatedUserEvents allEvents={allEvents} user={user} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />
 
                 {/* <section className="py-28">
                     <div className="max-w-screen-lg mx-auto px-4 md:px-8">
