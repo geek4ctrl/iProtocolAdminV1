@@ -1,13 +1,15 @@
 'use client'
 
-import Messages from "@/app/login/messages";
-import { createClient } from '@supabase/supabase-js';
+// import Messages from "@/app/login/messages";
+// import { createClient } from '@supabase/supabase-js';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import supabase from "./SupabaseClient"
 
 export default function AuthenticatedUserRegistrationClientComponent({ userTitle, userDesignation, user, publicSupabaseUrl, publicSupabaseAnonKey }: { userTitle: any, userDesignation: any, user: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
 
-    const supabase = createClient(publicSupabaseUrl, publicSupabaseAnonKey)
+    // const supabase = createClient(publicSupabaseUrl, publicSupabaseAnonKey)
+    // const supabase = supabase
 
     let [errorToDisplay, setErrorToDisplay] = useState<any>()
 
