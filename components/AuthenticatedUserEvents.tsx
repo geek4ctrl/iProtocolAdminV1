@@ -3,28 +3,24 @@
 import { createClient } from '@supabase/supabase-js';
 import { useStore } from "@/src/store";
 import Link from "next/link";
+import supabase from './SupabaseClient';
 
 
-export default async function AuthenticatedUserEvents({ allEvents, user, publicSupabaseUrl, publicSupabaseAnonKey }: { allEvents: any, user: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
+export default function AuthenticatedUserEvents({ allEvents, user, userInformation, publicSupabaseUrl, publicSupabaseAnonKey }: { allEvents: any, user: any, userInformation: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
 
-    const supabase = createClient(publicSupabaseUrl, publicSupabaseAnonKey)
+    //  // const supabase = createClient(publicSupabaseUrl, publicSupabaseAnonKey)
 
     const allEventsToDisplayHere = useStore((state) => state.event) ? useStore((state) => state.event) : allEvents;
     const chosenReservationType = useStore((state) => state.chosenReservationType);
 
     const loggedInUserEmail = user.email;
 
-    const data: any = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', loggedInUserEmail)    // Correct
-
     const handleReserveClick = async (event: any) => {
 
         const objectDataToSend = {
             userid: loggedInUserEmail,
-            userfirstname: data?.data[0]?.firstname,
-            userlastname: data?.data[0]?.surname,
+            userfirstname: userInformation?.data[0]?.firstname,
+            userlastname: userInformation?.data[0]?.surname,
             userpicture: "https://res.cloudinary.com/dhqvb8wbn/image/upload/v1658596949/iprotoco…",
             eventtitle: event.title,
             eventauthor: event.author,
@@ -65,7 +61,7 @@ export default async function AuthenticatedUserEvents({ allEvents, user, publicS
                     {
                         allEventsToDisplayHere?.map((item: any, idx: any) => (
                             <li key={idx} className="px-4 py-5 duration-150 hover:border-white hover:rounded-xl hover:bg-gray-50">
-                                <a href="" className="space-y-3">
+                                <a className="space-y-3">
                                     <div className="flex items-center gap-x-3">
                                         {/* <div className="bg-white w-14 h-14 border rounded-full flex items-center justify-center">
                                                     {item.eventpicture}
