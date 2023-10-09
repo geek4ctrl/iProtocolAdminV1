@@ -1,12 +1,59 @@
 'use client'
 
+import { createClient } from '@supabase/supabase-js';
 import { useStore } from "@/src/store";
 import Link from "next/link";
 
 
-export default function AuthenticatedUserEvents({ allEvents }: { allEvents: any }) {
+export default async function AuthenticatedUserEvents({ allEvents, user, publicSupabaseUrl, publicSupabaseAnonKey }: { allEvents: any, user: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
 
-    const allEventsToDisplayHere = useStore((state) => state.event) ? useStore((state) => state.event) : allEvents
+    const supabase = createClient(publicSupabaseUrl, publicSupabaseAnonKey)
+
+    const allEventsToDisplayHere = useStore((state) => state.event) ? useStore((state) => state.event) : allEvents;
+    const chosenReservationType = useStore((state) => state.chosenReservationType);
+
+    const loggedInUserEmail = user.email;
+
+    const data: any = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', loggedInUserEmail)    // Correct
+
+    const handleReserveClick = async (event: any) => {
+
+        const objectDataToSend = {
+            userid: loggedInUserEmail,
+            userfirstname: data?.data[0]?.firstname,
+            userlastname: data?.data[0]?.surname,
+            userpicture: "https://res.cloudinary.com/dhqvb8wbn/image/upload/v1658596949/iprotoco…",
+            eventtitle: event.title,
+            eventauthor: event.author,
+            eventdate: event.date,
+            eventplace: event.place,
+            programtime: event?.programme[0]?.time,
+            programtitle: event?.programme[0]?.title,
+            programpicture: event?.programme[0]?.picture,
+            status: false,
+            invitationstatus: "pending",
+            reservationtype: chosenReservationType
+        }
+
+        const { error } = await supabase
+            .from('event_reservations')
+            .insert(objectDataToSend)
+
+        if (error) {
+            if (error.code === "23505") {
+                // errorToDisplay = error.message;
+                // console.log(error?.message);
+            }
+        } else {
+            // location.reload();
+        }
+
+    }
+
+
     return (
         <section className="py-28">
             <div className="max-w-screen-lg mx-auto px-4 md:px-8">
@@ -54,9 +101,9 @@ export default function AuthenticatedUserEvents({ allEvents }: { allEvents: any 
                                             {item.place}
                                         </span>
                                         <span className="flex items-center gap-2">
-                                            <Link href="/login" className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none">
+                                            <button className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none" onClick={(e) => handleReserveClick(item)}>
                                                 Reserve
-                                            </Link>
+                                            </button>
                                         </span>
                                     </div>
                                 </a>
