@@ -1,5 +1,6 @@
 import Link from "next/link"
 import LogoutButton from "./LogoutButton"
+import NavigationBarLanguagesClientComponent from "./NavigationBarLanguagesClientComponent"
 
 
 export default function NavigationBar({ navigation, user }: { navigation: any, user: any }) {
@@ -36,11 +37,7 @@ export default function NavigationBar({ navigation, user }: { navigation: any, u
                         {
                             navigation.map((item: any, idx: any) => {
                                 return (
-                                    <li key={idx} className="text-gray-700 hover:text-indigo-600">
-                                        <a href={item.path} className="block">
-                                            {item.title}
-                                        </a>
-                                    </li>
+                                    <NavigationBarLanguagesClientComponent item={item} idx={idx} />
                                 )
                             })
                         }
