@@ -5,20 +5,9 @@ import { useStore } from "@/src/store"
 
 export function NavigationClientComponent({ allGomaPlaces, allKinshasaPlaces }: { allGomaPlaces: any, allKinshasaPlaces: any }) {
 
-    // const places = await supabase.from('getplaces').select();
-    // const allPlaces = places.data;
-
     const { name } = useStore();
     const allPlaces = useStore((state) => state.place)
     const allEvents = useStore((state) => state.event)
-
-
-    //  const allPlaces = useStore.getState().place;
-    // const name = useStore.getState().name;
-
-    // console.log('Dang place!', allPlaces)
-    // console.log('Dang name: ', name)
-
 
     function choosePlace(place: any) {
         if (place == 'Goma') {

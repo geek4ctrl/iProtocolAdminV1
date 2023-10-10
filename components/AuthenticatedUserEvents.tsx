@@ -1,15 +1,10 @@
 'use client'
 
-import { createClient } from '@supabase/supabase-js';
 import { useStore } from "@/src/store";
-import Link from "next/link";
 import supabase from './SupabaseClient';
 import AuthenticatedUserEventsReservationComponent from './AuthenticatedUserEventsReservationComponent';
 
-
 export default function AuthenticatedUserEvents({ allEvents, user, userInformation, publicSupabaseUrl, publicSupabaseAnonKey }: { allEvents: any, user: any, userInformation: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
-
-    //  // const supabase = createClient(publicSupabaseUrl, publicSupabaseAnonKey)
 
     const allEventsToDisplayHere = useStore((state) => state.event) ? useStore((state) => state.event) : allEvents;
     const chosenReservationType = useStore((state) => state.chosenReservationType);

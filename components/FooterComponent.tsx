@@ -1,6 +1,5 @@
 
 
-
 export default function FooterComponent({ footerNavs }: { footerNavs: any }) {
     return (
         <footer className="text-gray-500 px-4 py-5 max-w-screen-xl mx-auto md:px-8 mt-4" style={{ width: "-webkit-fill-available", marginTop: "2rem" }}>

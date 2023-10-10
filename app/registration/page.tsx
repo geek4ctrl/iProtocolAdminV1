@@ -1,9 +1,8 @@
 import AuthenticatedUserRegistrationClientComponent from '@/components/AuthenticatedUserRegistrationClientComponent';
 import LogoutButton from '@/components/LogoutButton';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import Link from 'next/link'
-import Messages from '../login/messages';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 
 const publicSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const publicSupabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
