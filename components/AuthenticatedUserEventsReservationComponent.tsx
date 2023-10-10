@@ -1,6 +1,5 @@
 'use client'
 
-import Link from "next/link";
 import supabase from "./SupabaseClient";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
