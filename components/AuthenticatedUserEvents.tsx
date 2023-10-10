@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { useStore } from "@/src/store";
 import Link from "next/link";
 import supabase from './SupabaseClient';
+import AuthenticatedUserEventsReservationComponent from './AuthenticatedUserEventsReservationComponent';
 
 
 export default function AuthenticatedUserEvents({ allEvents, user, userInformation, publicSupabaseUrl, publicSupabaseAnonKey }: { allEvents: any, user: any, userInformation: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
@@ -96,11 +97,13 @@ export default function AuthenticatedUserEvents({ allEvents, user, userInformati
 
                                             {item.place}
                                         </span>
-                                        <span className="flex items-center gap-2">
+                                        {/* <span className="flex items-center gap-2">
                                             <button className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none" onClick={(e) => handleReserveClick(item)}>
                                                 Reserve
                                             </button>
-                                        </span>
+                                        </span> */}
+
+                                        <AuthenticatedUserEventsReservationComponent item={item} user={user} userInformation={userInformation} chosenReservationType={chosenReservationType} />
                                     </div>
                                 </a>
                             </li>
