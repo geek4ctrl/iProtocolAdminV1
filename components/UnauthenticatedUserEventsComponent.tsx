@@ -8,7 +8,7 @@ export default function UnauthenticatedUserEventsComponent({ allEventsToDisplay 
 
     const allEventsToDisplayHere = useStore((state) => state.event);
 
-    const notify = () => toast("Please login to make a reservation");
+    const notify = () => toast("Please login to make a");
 
     return (
         <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">
