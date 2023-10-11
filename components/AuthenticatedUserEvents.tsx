@@ -56,9 +56,9 @@ export default function AuthenticatedUserEvents({ allEvents, user, userInformati
                 <ul className="mt-12 divide-y space-y-3">
                     {
                         allEventsToDisplayHere?.map((item: any, idx: any) => (
-                            <li key={idx} className="px-4 py-5 duration-150 hover:border-white hover:rounded-xl hover:bg-gray-50">
+                            <li key={idx} className="px-4 py-5 duration-150 hover:border-white hover:rounded-xl hover:bg-gray-50" style={{ border: "0.5px solid #80808030", borderRadius: "0.5rem", color: "black" }}>
                                 <a className="space-y-3">
-                                    <div className="flex items-center gap-x-3">
+                                    <div className="flex items-center gap-x-6">
                                         {/* <div className="bg-white w-14 h-14 border rounded-full flex items-center justify-center">
                                                     {item.eventpicture}
                                                 </div> */}
@@ -74,7 +74,7 @@ export default function AuthenticatedUserEvents({ allEvents, user, userInformati
                                             <h3 className="text-base text-gray-800 font-semibold mt-1">{item.author}</h3>
                                         </div>
                                     </div>
-                                    <p className="text-gray-600 sm:text-sm">
+                                    <p className="text-gray-600 sm:text-sm" style={{ padding: "0.5rem" }}>
                                         {item.title}
                                     </p>
                                     <div className="text-sm text-gray-600 flex items-center gap-6">
@@ -92,12 +92,6 @@ export default function AuthenticatedUserEvents({ allEvents, user, userInformati
 
                                             {item.place}
                                         </span>
-                                        {/* <span className="flex items-center gap-2">
-                                            <button className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none" onClick={(e) => handleReserveClick(item)}>
-                                                Reserve
-                                            </button>
-                                        </span> */}
-
                                         <AuthenticatedUserEventsReservationComponent item={item} user={user} userInformation={userInformation} chosenReservationType={chosenReservationType} />
                                     </div>
                                 </a>

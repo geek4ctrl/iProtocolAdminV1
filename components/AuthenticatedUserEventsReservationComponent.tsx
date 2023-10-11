@@ -48,7 +48,7 @@ export default function AuthenticatedUserEventsReservationComponent({ item, user
     return (
         <span className="flex items-center gap-2">
             <ToastContainer />
-            <button className="block py-3 text-center text-gray-700 hover:text-indigo-600 border rounded-lg md:border-none" onClick={(e) => handleReserveClick(item)}>
+            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={(e) => handleReserveClick(item)} style={{ color: "black", backgroundColor: "#F2E3FB" }}>
                 Reserve
             </button>
         </span>
