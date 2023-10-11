@@ -80,7 +80,7 @@ export default async function Login() {
                 navigation.map((item, idx) => {
                   return (
                     <li key={idx} className="text-gray-700 hover:text-indigo-600">
-                      <a href={item.path} className="block">
+                      <a href="javascript:void(0)" className="block">
                         {item.title}
                       </a>
                     </li>
