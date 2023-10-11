@@ -4,7 +4,23 @@ import { useStore } from "@/src/store";
 import supabase from './SupabaseClient';
 import AuthenticatedUserEventsReservationComponent from './AuthenticatedUserEventsReservationComponent';
 
-export default function AuthenticatedUserEvents({ allEvents, user, userInformation, publicSupabaseUrl, publicSupabaseAnonKey }: { allEvents: any, user: any, userInformation: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
+interface Event {
+    title: string;
+    author: string;
+    place: string;
+    eventpicture: string;
+    // Add more properties as needed
+}
+
+interface AuthenticatedUserEventsProps {
+    allEvents: Event[];
+    user: any; // Replace 'any' with the appropriate user type
+    userInformation: any; // Replace 'any' with the appropriate userInformation type
+    publicSupabaseUrl: any; // Replace 'any' with the appropriate type
+    publicSupabaseAnonKey: any; // Replace 'any' with the appropriate type
+}
+
+export default function AuthenticatedUserEvents({ allEvents, user, userInformation, publicSupabaseUrl, publicSupabaseAnonKey }: AuthenticatedUserEventsProps) {
 
     const allEventsToDisplayHere = useStore((state) => state.event) ? useStore((state) => state.event) : allEvents;
     const chosenReservationType = useStore((state) => state.chosenReservationType);

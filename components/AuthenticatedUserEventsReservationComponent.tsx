@@ -4,6 +4,34 @@ import supabase from "./SupabaseClient";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+interface Event {
+    title: string;
+    author: string;
+    place: string;
+    eventpicture: string;
+    // Add more properties as needed
+}
+
+interface User {
+    email: string;
+    // Add more properties as needed
+}
+
+interface UserInformation {
+    data: {
+        firstname: string;
+        surname: string;
+        // Add more properties as needed
+    }[];
+}
+
+interface AuthenticatedUserEventsReservationComponentProps {
+    item: Event;
+    user: User;
+    userInformation: UserInformation;
+    chosenReservationType: string; // Replace 'string' with the appropriate type
+}
+
 export default function AuthenticatedUserEventsReservationComponent({ item, user, userInformation, chosenReservationType }: { item: any, user: any, userInformation: any, chosenReservationType: any }) {
 
     const handleReserveClick = async (event: any) => {

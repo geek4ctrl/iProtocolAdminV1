@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-export default function BackButton() {
+interface BackButtonProps { }
+
+export default function BackButton(props: BackButtonProps) {
     return (
         <Link
             href="/"

@@ -2,8 +2,11 @@
 import AuthenticatedUserDashboardContent from "./AuthenticatedUserDashboardContent";
 import AuthenticatedUserDashboardTitle from "./AuthenticatedUserDashboardTitle";
 
+interface AuthenticatedUserDashboardProps {
+    plans: any; // You should replace 'any' with the appropriate type for 'plans'
+}
 
-export default function AuthenticatedUserDashboard({ plans }: { plans: any }) {
+export default function AuthenticatedUserDashboard({ plans }: { plans: AuthenticatedUserDashboardProps }) {
     return (
         <section className='py-14'>
 
