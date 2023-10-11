@@ -1,4 +1,12 @@
+interface FooterNavItem {
+    name: string;
+    href: string;
+    // Add more properties as needed
+}
 
+interface FooterComponentProps {
+    footerNavs: FooterNavItem[];
+}
 
 export default function FooterComponent({ footerNavs }: { footerNavs: any }) {
     return (

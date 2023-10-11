@@ -1,6 +1,21 @@
 'use client'
 
-import { useStore } from "@/src/store"
+import { useStore } from "@/src/store";
+
+interface NavigationItem {
+    // Define the structure of a navigation item as needed
+    name: string;
+    href: string;
+    // Add more properties as needed
+}
+
+interface NavigationBarProps {
+    navigation: NavigationItem[];
+    user: {
+        email: string;
+        // Add more user properties as needed
+    } | null;
+}
 
 
 export function NavigationClientComponent({ allGomaPlaces, allKinshasaPlaces }: { allGomaPlaces: any, allKinshasaPlaces: any }) {

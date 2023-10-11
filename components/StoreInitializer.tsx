@@ -3,7 +3,13 @@
 import { useStore } from "@/src/store";
 import { useRef } from "react";
 
-function StoreInitializer({ name, place, event }: { name: string, place: any[], event: any[] }) {
+interface StoreInitializerProps {
+    name: string;
+    place: any[];
+    event: any[];
+}
+
+function StoreInitializer({ name, place, event }: StoreInitializerProps) {
 
     const iniitialized = useRef(false);
     if (!iniitialized.current) {

@@ -5,6 +5,35 @@ import { NavigationClientComponent } from "@/components/NavigationClientComponen
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
+interface Event {
+    // Define the shape of an event
+    // Modify this to match the actual structure of your events
+    id: number;
+    name: string;
+    // Add more event properties as needed
+}
+
+interface Place {
+    // Define the shape of a place
+    // Modify this to match the actual structure of places
+    id: number;
+    name: string;
+    // Add more place properties as needed
+}
+
+interface UserInformation {
+    // Define the shape of user information
+    // Modify this to match the actual structure of user information
+    id: number;
+    // Add more user information properties as needed
+}
+
+interface IndexProps {
+    // Define the expected props for the Index component
+    publicSupabaseUrl: string;
+    publicSupabaseAnonKey: string;
+}
+
 const navigation = [
     { title: "Francais", path: "javascript:void(0)" },
     { title: "English", path: "javascript:void(0)" },
@@ -20,7 +49,7 @@ export default async function Index() {
     const supabase = createServerComponentClient({ cookies });
 
     const events = await supabase.from("events").select();
-    const allEvents = events.data;
+    const allEvents: any = events.data;
 
     console.log('Show me all the events: ', events);
 

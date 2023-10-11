@@ -2,13 +2,33 @@ import Link from 'next/link';
 
 export default async function Index() {
 
-    const navigation = [
+    interface NavigationItem {
+        title: string;
+        path: string;
+    }
+
+    interface Post {
+        title: string;
+        desc: string;
+        img: string;
+        authorLogo: string;
+        authorName: string;
+        date: string;
+        href: string;
+    }
+
+    interface FooterNavItem {
+        href: string;
+        name: string;
+    }
+
+    const navigation: NavigationItem[] = [
         { title: "Francais", path: "javascript:void(0)" },
         { title: "English", path: "javascript:void(0)" },
         { title: "Italien", path: "javascript:void(0)" },
     ];
 
-    const posts = [
+    const posts: Post[] = [
         {
             title: "Saturday July 2, 2022",
             desc: "Going into this journey, I had a standard therapy regimen, based on looking at the research literature. After I saw the movie, I started to ask other people what they did for their anxiety, and some",
@@ -38,7 +58,7 @@ export default async function Index() {
         },
     ];
 
-    const footerNavs = [
+    const footerNavs: FooterNavItem[] = [
         {
             href: 'javascript:void()',
             name: 'About'

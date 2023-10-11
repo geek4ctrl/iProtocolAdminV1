@@ -1,7 +1,30 @@
 'use client'
 
 import { useState } from "react";
-import supabase from "./SupabaseClient"
+import supabase from "./SupabaseClient";
+
+interface UserTitle {
+    value: string;
+    // Add more properties as needed
+}
+
+interface UserDesignation {
+    value: string;
+    // Add more properties as needed
+}
+
+interface User {
+    email: string;
+    // Add more properties as needed
+}
+
+interface AuthenticatedUserRegistrationClientComponentProps {
+    userTitle: UserTitle[];
+    userDesignation: UserDesignation[];
+    user: User;
+    publicSupabaseUrl: any; // Replace 'any' with the appropriate type
+    publicSupabaseAnonKey: any; // Replace 'any' with the appropriate type
+}
 
 export default function AuthenticatedUserRegistrationClientComponent({ userTitle, userDesignation, user, publicSupabaseUrl, publicSupabaseAnonKey }: { userTitle: any, userDesignation: any, user: any, publicSupabaseUrl: any, publicSupabaseAnonKey: any }) {
 
