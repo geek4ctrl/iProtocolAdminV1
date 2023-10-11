@@ -1,50 +1,60 @@
 import LogoutButton from '@/components/LogoutButton';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
-import { cookies } from 'next/headers'
-import Link from 'next/link'
-import Messages from './messages'
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
+import Messages from './messages';
 
-const navigation = [
-  { title: "Francais", path: "javascript:void(0)" },
-  { title: "English", path: "javascript:void(0)" },
-  { title: "Italien", path: "javascript:void(0)" },
-];
+interface NavigationItem {
+  title: string;
+  path: string;
+}
 
-const footerNavs = [
-  {
-    href: 'javascript:void()',
-    name: 'About'
-  },
-  {
-    href: 'javascript:void()',
-    name: 'Blog'
-  },
-  {
-    href: 'javascript:void()',
-    name: ''
-  },
-  {
-    href: 'javascript:void()',
-    name: 'Team'
-  },
-  {
-    href: 'javascript:void()',
-    name: 'Careers'
-  },
-
-  {
-    href: 'javascript:void()',
-    name: 'Support'
-  }
-];
+interface FooterNavItem {
+  href: string;
+  name: string;
+}
 
 export default async function Login() {
 
-  const supabase = createServerComponentClient({ cookies })
+  const supabase = createServerComponentClient({ cookies });
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const navigation: NavigationItem[] = [
+    { title: "Francais", path: "javascript:void(0)" },
+    { title: "English", path: "javascript:void(0)" },
+    { title: "Italien", path: "javascript:void(0)" },
+  ];
+
+  const footerNavs: FooterNavItem[] = [
+    {
+      href: 'javascript:void()',
+      name: 'About'
+    },
+    {
+      href: 'javascript:void()',
+      name: 'Blog'
+    },
+    {
+      href: 'javascript:void()',
+      name: ''
+    },
+    {
+      href: 'javascript:void()',
+      name: 'Team'
+    },
+    {
+      href: 'javascript:void()',
+      name: 'Careers'
+    },
+
+    {
+      href: 'javascript:void()',
+      name: 'Support'
+    }
+  ];
 
   return (
 

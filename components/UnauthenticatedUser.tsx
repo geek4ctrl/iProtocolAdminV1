@@ -1,7 +1,13 @@
 import { NavigationClientComponent } from "./NavigationClientComponent";
 import UnauthenticatedUserEventsComponent from "./UnauthenticatedUserEventsComponent";
 
-export default function UnauthenticatedUser({ allEventsToDisplay, allGomaPlaces, allKinshasaPlaces }: { allEventsToDisplay: any, allGomaPlaces: any, allKinshasaPlaces: any }) {
+interface UnauthenticatedUserProps {
+    allEventsToDisplay: any;
+    allGomaPlaces: any;
+    allKinshasaPlaces: any;
+}
+
+export default function UnauthenticatedUser({ allEventsToDisplay, allGomaPlaces, allKinshasaPlaces }: UnauthenticatedUserProps) {
     return (
         <div className="w-full flex flex-col items-center">
             <NavigationClientComponent allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />

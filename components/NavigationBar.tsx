@@ -2,6 +2,20 @@ import Link from "next/link"
 import LogoutButton from "./LogoutButton"
 import NavigationBarLanguagesClientComponent from "./NavigationBarLanguagesClientComponent"
 
+interface NavigationItem {
+    // Define the structure of a navigation item as needed
+    name: string;
+    href: string;
+    // Add more properties as needed
+}
+
+interface NavigationBarProps {
+    navigation: NavigationItem[];
+    user: {
+        email: string;
+        // Add more user properties as needed
+    } | null;
+}
 
 export default function NavigationBar({ navigation, user }: { navigation: any, user: any }) {
 

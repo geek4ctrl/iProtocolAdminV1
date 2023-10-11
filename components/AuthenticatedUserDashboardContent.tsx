@@ -5,6 +5,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
 
+
+interface Plan {
+    name: string;
+    image: string;
+    // Add more properties as needed
+}
+
 export default function AuthenticatedUserDashboardContent({ plans }: { plans: any }) {
     const router = useRouter()
 

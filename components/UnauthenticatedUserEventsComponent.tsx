@@ -4,11 +4,23 @@ import { useStore } from "@/src/store"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function UnauthenticatedUserEventsComponent({ allEventsToDisplay }: { allEventsToDisplay: any }) {
+interface EventItem {
+    eventpicture: string;
+    title: string;
+    author: string;
+    time: string;
+    date: string;
+}
+
+interface UnauthenticatedUserEventsComponentProps {
+    allEventsToDisplay: EventItem[];
+}
+
+export default function UnauthenticatedUserEventsComponent({ allEventsToDisplay }: UnauthenticatedUserEventsComponentProps) {
 
     const allEventsToDisplayHere = useStore((state) => state.event);
 
-    const notify = () => toast("Please login to make a");
+    const notify = () => toast("Please login to make a reservation");
 
     return (
         <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">

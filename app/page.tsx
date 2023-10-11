@@ -1,7 +1,5 @@
 import { createRouteHandlerClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
-import Link from 'next/link'
-import LogoutButton from '../components/LogoutButton'
 
 import { useStore } from '@/src/store';
 import StoreInitializer from '@/components/StoreInitializer';
@@ -9,7 +7,6 @@ import FooterComponent from '@/components/FooterComponent';
 import UnauthenticatedUser from '@/components/UnauthenticatedUser';
 import NavigationBar from '@/components/NavigationBar';
 import AuthenticatedUserDashboard from '@/components/AuthenticatedUserDashboard';
-import { NextResponse } from 'next/server';
 import AuthenticatedUserRegistrationClientComponent from '@/components/AuthenticatedUserRegistrationClientComponent';
 
 export const dynamic = 'force-dynamic'
