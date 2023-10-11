@@ -78,7 +78,7 @@ const footerNavs = [
   }
 ];
 
-const plans = [
+const plans: any = [
   {
     name: "Invitation",
     price: 12,
