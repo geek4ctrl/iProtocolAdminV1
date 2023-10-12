@@ -1,4 +1,5 @@
 import AuthenticatedUserEvents from "@/components/AuthenticatedUserEvents";
+import AuthenticatedUserEventsSubNav from "@/components/AuthenticatedUserEventsSubNav";
 import BackButton from "@/components/BackButton";
 import NavigationBar from "@/components/NavigationBar";
 import { NavigationClientComponent } from "@/components/NavigationClientComponent";
@@ -98,36 +99,7 @@ export default async function Index() {
 
                 <NavigationBar navigation={navigation} user={user} />
                 <BackButton />
-
-                <div className="mt-6" style={{ marginBottom: "2rem" }}>
-                    <ul className="w-full border-b flex items-center gap-x-3 overflow-x-auto">
-                        <li key={subNavIdx} className={`py-2 border-b-2 ${"border-white text-gray-500"}`}>
-                            <a
-                                href={subNavigation[0].href}
-                                className="py-2.5 px-4 rounded-lg duration-150 text-sm hover:text-indigo-600 hover:bg-gray-50 active:bg-gray-100 font-medium"
-                            >
-                                {subNavigation[0].name}
-                            </a>
-                        </li>
-                        <li key={subNavIdx} className={`py-2 border-b-2 ${"border-indigo-600 text-indigo-600"}`}>
-                            <a
-                                href={subNavigation[1].href}
-                                className="py-2.5 px-4 rounded-lg duration-150 text-sm hover:text-indigo-600 hover:bg-gray-50 active:bg-gray-100 font-medium"
-                            >
-                                {subNavigation[1].name}
-                            </a>
-                        </li>
-                        <li key={subNavIdx} className={`py-2 border-b-2 ${"border-white text-gray-500"}`}>
-                            <a
-                                href={subNavigation[2].href}
-                                className="py-2.5 px-4 rounded-lg duration-150 text-sm hover:text-indigo-600 hover:bg-gray-50 active:bg-gray-100 font-medium"
-                            >
-                                {subNavigation[2].name}
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
+                <AuthenticatedUserEventsSubNav />
                 <NavigationClientComponent allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />
                 <AuthenticatedUserEvents allEvents={allEvents} user={user} userInformation={userInformation} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />
             </div>
