@@ -40,7 +40,7 @@ export default function AuthenticatedUserDashboardContent({ plans }: { plans: an
     }
 
     return (
-        <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2' style={{ display: "flex", flexDirection: "column" }}>
+        <div className='mt-16 space-y-6 justify-center gap-6 sm:grid sm:grid-cols-2 sm:space-y-0 lg:grid-cols-2' style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
             <ToastContainer />
             {
                 plans.map((item: any, idx: any) => (

@@ -1,4 +1,5 @@
 import AuthenticatedUserEvents from "@/components/AuthenticatedUserEvents";
+import AuthenticatedUserEventsSubNav from "@/components/AuthenticatedUserEventsSubNav";
 import BackButton from "@/components/BackButton";
 import NavigationBar from "@/components/NavigationBar";
 import { NavigationClientComponent } from "@/components/NavigationClientComponent";
@@ -45,6 +46,23 @@ let userInformation = {}
 const publicSupabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const publicSupabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+const subNavigation = [
+    {
+        href: "javascript:void(0)",
+        name: "Dashboard"
+    },
+    {
+        href: "javascript:void(0)",
+        name: "Events"
+    },
+    {
+        href: "javascript:void(0)",
+        name: "Reservations"
+    }
+]
+
+const subNavIdx = 1;
+
 export default async function Index() {
     const supabase = createServerComponentClient({ cookies });
 
@@ -81,6 +99,7 @@ export default async function Index() {
 
                 <NavigationBar navigation={navigation} user={user} />
                 <BackButton />
+                <AuthenticatedUserEventsSubNav />
                 <NavigationClientComponent allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />
                 <AuthenticatedUserEvents allEvents={allEvents} user={user} userInformation={userInformation} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />
             </div>
