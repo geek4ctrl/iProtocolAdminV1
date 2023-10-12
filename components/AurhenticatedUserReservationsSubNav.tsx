@@ -19,20 +19,20 @@ const subNavigation = [
     }
 ]
 
-const subNavIdx = 1;
+const subNavIdx = 2;
 
-export default function AuthenticatedUserEventsSubNav() {
+export default function AurhenticatedUserReservationsSubNav() {
     const router = useRouter()
 
     const displayMessageForBackButton = () => toast("Please select back button");
     const routeToReservations = () => toast("Routing to reservations soon");
 
     const routeToDashboardPage = () => {
-        router.push('/reservations', { scroll: false })
+        router.push('/dashboard', { scroll: false })
     }
 
-    const routeToReservationsPage = () => {
-        router.push('/reservations', { scroll: false })
+    const routeToEventsPage = () => {
+        router.push('/events', { scroll: false })
     }
 
     return (
@@ -46,7 +46,7 @@ export default function AuthenticatedUserEventsSubNav() {
                         {subNavigation[0].name}
                     </a>
                 </li>
-                <li key={subNavIdx} className={`py-2 border-b-2 ${"border-indigo-600 text-indigo-600"}`}>
+                <li key={subNavIdx} className={`py-2 border-b-2 ${"border-white text-gray-500"}`} onClick={() => routeToEventsPage()}>
                     <a
                         href={subNavigation[1].href}
                         className="py-2.5 px-4 rounded-lg duration-150 text-sm hover:text-indigo-600 hover:bg-gray-50 active:bg-gray-100 font-medium"
@@ -54,7 +54,7 @@ export default function AuthenticatedUserEventsSubNav() {
                         {subNavigation[1].name}
                     </a>
                 </li>
-                <li key={subNavIdx} className={`py-2 border-b-2 ${"border-white text-gray-500"}`} onClick={routeToReservationsPage}>
+                <li key={subNavIdx} className={`py-2 border-b-2 ${"border-indigo-600 text-indigo-600"}`}>
                     <a
                         href={subNavigation[2].href}
                         className="py-2.5 px-4 rounded-lg duration-150 text-sm hover:text-indigo-600 hover:bg-gray-50 active:bg-gray-100 font-medium"
