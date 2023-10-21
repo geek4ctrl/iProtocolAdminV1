@@ -6,6 +6,7 @@ type State = {
     event: any;
     chosenPlace: string;
     chosenReservationType: string;
+    navigationState: any;
 }
 
 type Action = {
@@ -14,6 +15,7 @@ type Action = {
     setEvent: (event: any) => void;
     setChosenPlace: (chosenPlace: string) => void;
     setReservationType: (event: State['chosenReservationType']) => void;
+    setNavigationState: (navigationState: any) => void;
 }
 
 export const useStore = create<State & Action>((set) => ({
@@ -22,9 +24,11 @@ export const useStore = create<State & Action>((set) => ({
     event: null,
     chosenPlace: "",
     chosenReservationType: "",
+    navigationState: 0,
     setName: (name) => set(() => ({ name: name })),
     setPlace: (place) => set({ place: place }),
     setEvent: (event) => set({ event: event }),
     setChosenPlace: (chosenPlace) => set({ chosenPlace: chosenPlace }),
     setReservationType: (chosenReservationType) => set({ chosenReservationType: chosenReservationType }),
+    setNavigationState: (navigationState: any) => set({ navigationState: navigationState })
 }));

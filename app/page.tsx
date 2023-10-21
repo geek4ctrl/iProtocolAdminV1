@@ -8,6 +8,13 @@ import UnauthenticatedUser from '@/components/UnauthenticatedUser';
 import NavigationBar from '@/components/NavigationBar';
 import AuthenticatedUserDashboard from '@/components/AuthenticatedUserDashboard';
 import AuthenticatedUserRegistrationClientComponent from '@/components/AuthenticatedUserRegistrationClientComponent';
+import TabNavItemClientComponent from '@/components/TabNavItemClientComponent';
+import AllRequestsClientComponent from '@/components/AllRequestsClientComponent';
+import AllValidationsClientComponent from '@/components/AllValidationsClientComponent';
+import AllValidatedAccreditationsClientComponent from '@/components/AllValidatedAccreditationsClientComponent';
+import AllValidatedInvitationsClientComponent from '@/components/AllValidatedInvitationsClientComponent';
+import AllAccreditationsClientComponent from '@/components/AllAccreditationsClientComponent';
+import AllInvitationsClientComponent from '@/components/AllInvitationsClientComponent';
 
 export const dynamic = 'force-dynamic'
 
@@ -228,28 +235,59 @@ export default async function Index() {
     .select("*")
     .eq('email', `${user?.email}`)
 
+  // All requests
+  const requests = await supabase.from("pending_event_reservations").select();
+  const allRequests: any = requests.data;
+
+  // All invitations
+  const invitations = await supabase.from("pending_invitation_event_reservations").select();
+  const allInvitations: any = invitations.data;
+
+  // All accreditations
+  const accreditations = await supabase.from("pending_accreditation_event_reservations").select();
+  const allAccreditations: any = accreditations.data;
+
+  // Validated invitations
+  const validatedInvitations = await supabase.from("validated_invitation_event_reservations").select();
+  const allValidatedInvitations: any = validatedInvitations.data;
+
+  // Validated accreditations
+  const validatedAccreditations = await supabase.from("validated_accreditation_event_reservations").select();
+  const allValidatedAccreditations: any = validatedAccreditations.data;
+
+  // All validations
+  const validations = await supabase.from("validated_event_reservations").select();
+  const allValidations: any = validations.data;
+
   return (
     <>
-      <StoreInitializer name={"Laurent"} place={allPlaces} event={allEventsToDisplay} />
+      <StoreInitializer name={"Laurent"} place={allPlaces} event={allEventsToDisplay} navigationState={0} />
 
       <div className="w-full flex flex-col items-center">
-        <NavigationBar navigation={navigation} user={user} />
+        {/* <NavigationBar navigation={navigation} user={user} /> */}
+        <div className="w-full flex flex-col items-center" style={{ marginBottom: "2rem" }}>
+          <div className="px-4 md:px-8">
+            <ul role="tablist" className="max-w-screen-xl mx-auto border-b flex items-center gap-x-6 overflow-x-auto text-sm">
+              <TabNavItemClientComponent />
+            </ul>
+          </div>
+        </div>
 
-        {user ?
-          (
-            <div>
-              {users ? (<AuthenticatedUserDashboard plans={plans} />) : (<AuthenticatedUserRegistrationClientComponent userTitle={userTitle} userDesignation={userDesignation} user={user} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />)}
+        <AllRequestsClientComponent allRequests={allRequests} />
 
-              {/* {users ? (<AuthenticatedUserRegistrationClientComponent userTitle={userTitle} userDesignation={userDesignation} user={user} publicSupabaseUrl={publicSupabaseUrl} publicSupabaseAnonKey={publicSupabaseAnonKey} />) : (<AuthenticatedUserDashboard plans={plans} />)} */}
-            </div>
-          )
-          :
-          (
-            <UnauthenticatedUser allEventsToDisplay={allEventsToDisplay} allGomaPlaces={allGomaPlaces} allKinshasaPlaces={allKinshasaPlaces} />
-          )}
+        <AllInvitationsClientComponent allInvitations={allInvitations} />
+
+        <AllAccreditationsClientComponent allAccreditations={allAccreditations} />
+
+        <AllValidatedInvitationsClientComponent allValidatedInvitations={allValidatedInvitations} />
+
+        <AllValidatedAccreditationsClientComponent allValidatedAccreditations={allValidatedAccreditations} />
+
+        <AllValidationsClientComponent allValidations={allValidations} />
+
       </div>
 
-      <FooterComponent footerNavs={footerNavs} />
+      {/* <FooterComponent footerNavs={footerNavs} /> */}
     </>
   )
 }
