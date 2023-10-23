@@ -1,12 +1,108 @@
 'use client'
 
 import { useStore } from '@/src/store';
+import { useState } from 'react';
+import QRCode from 'react-qr-code';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import supabase from './SupabaseClient';
 
 export default function AllValidationsClientComponent({ allValidations }: { allValidations: any }) {
 
-    const selectedItem = useStore((state) => state.navigationState)
+    const selectedItem = useStore((state) => state.navigationState);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const [state, setState] = useState({ title: "", firstname: "", surname: "", email: "", diocese: "" });
+
+    const [modalContent, setModalContent] = useState({
+        id: 5,
+        eventauthor: "Pape Benoit XVI",
+        eventdate: "Saturday July 2, 2022",
+        invitationstatus: "validated",
+        reservationtype: "Invitation",
+        userid: "bigey35353@ipniel.com"
+    });
+
+    const viewInvitations = async (request: any) => {
+
+        console.log('Show me the selected request: ', request);
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.id
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.eventauthor
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.eventdate
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.invitationstatus
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.reservationtype
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.userid
+        }))
+
+        try {
+            const { data, error } = await supabase
+                .from('users')
+                .select("*")
+                .eq('email', request.userid);
+
+            if (error) {
+                throw error;
+            }
+
+            console.log('Show me the data: ', data);
+
+            const modalContent = {
+                title: data[0].title,
+                firstname: data[0].firstname,
+                surname: data[0].surname,
+                email: data[0].email,
+                diocese: data[0].diocese,
+            }
+
+            setState(prevState => ({
+                ...prevState, title: modalContent.title
+            }))
+
+            setState(prevState => ({
+                ...prevState, firstname: modalContent.firstname
+            }))
+
+            setState(prevState => ({
+                ...prevState, surname: modalContent.surname
+            }))
+
+            setState(prevState => ({
+                ...prevState, email: modalContent.email
+            }))
+
+            setState(prevState => ({
+                ...prevState, diocese: modalContent.diocese
+            }))
+
+            setIsModalOpen(true);
+            // successfulNotification();
+            // location.reload();
+
+            console.log('Show me the state: ', state);
+            console.log('Show me the qr code: ', modalContent);
+        } catch (error) {
+            // eventReservationUpdateNotification();
+        }
+
+    }
 
     return (
 
@@ -73,7 +169,7 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
 
                                         <td className="text-right px-6 whitespace-nowrap">
                                             <a className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                            // onClick={() => viewInvitations(request)}
+                                                onClick={() => viewInvitations(request)}
                                             >
                                                 View
                                             </a>
@@ -88,6 +184,42 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                     </table>
                 </div>
             </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 z-10 overflow-y-auto" style={{ width: "40%", position: "absolute" }}>
+                    <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setIsModalOpen(false)}></div>
+                    <div className="flex items-center min-h-screen px-4 py-8">
+                        <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
+                            <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500" style={{ textAlign: "center" }}>
+                                <h1>
+                                    {state.title}  {state.firstname} {state.surname}
+                                </h1>
+                                <h1>{state.email}</h1>
+                                <h1>{state.diocese}</h1>
+                            </div>
+
+                            <div className="" style={{ textAlign: "-webkit-center" }}>
+                                <QRCode value={modalContent.userid} />
+                            </div>
+
+                            <div className="flex items-center gap-3 p-4 mt-5 border-t" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                                <button
+                                    className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Download
+                                </button>
+                                <button
+                                    className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }

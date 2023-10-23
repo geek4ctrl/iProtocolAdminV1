@@ -1,19 +1,109 @@
 'use client'
 
 import { useStore } from '@/src/store';
+import { useState } from 'react';
+import QRCode from 'react-qr-code';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import supabase from './SupabaseClient';
 
 export default function AllValidatedInvitationsClientComponent({ allValidatedInvitations }: { allValidatedInvitations: any }) {
 
-    const selectedItem = useStore((state) => state.navigationState)
+    const selectedItem = useStore((state) => state.navigationState);
 
-    // const [state, setState] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    let state = true;
+    const [state, setState] = useState({ title: "", firstname: "", surname: "", email: "", diocese: "" });
 
-    const setState = (statePassed: any) => {
-        state = statePassed
+    const [modalContent, setModalContent] = useState({
+        id: 5,
+        eventauthor: "Pape Benoit XVI",
+        eventdate: "Saturday July 2, 2022",
+        invitationstatus: "validated",
+        reservationtype: "Invitation",
+        userid: "bigey35353@ipniel.com"
+    });
+
+    const viewInvitations = async (request: any) => {
+
+        console.log('Show me the selected request: ', request);
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.id
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.eventauthor
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.eventdate
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.invitationstatus
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.reservationtype
+        }))
+
+        setModalContent(prevState => ({
+            ...prevState, title: request.userid
+        }))
+
+        try {
+            const { data, error } = await supabase
+                .from('users')
+                .select("*")
+                .eq('email', request.userid);
+
+            if (error) {
+                throw error;
+            }
+
+            console.log('Show me the data: ', data);
+
+            const modalContent = {
+                title: data[0].title,
+                firstname: data[0].firstname,
+                surname: data[0].surname,
+                email: data[0].email,
+                diocese: data[0].diocese,
+            }
+
+            setState(prevState => ({
+                ...prevState, title: modalContent.title
+            }))
+
+            setState(prevState => ({
+                ...prevState, firstname: modalContent.firstname
+            }))
+
+            setState(prevState => ({
+                ...prevState, surname: modalContent.surname
+            }))
+
+            setState(prevState => ({
+                ...prevState, email: modalContent.email
+            }))
+
+            setState(prevState => ({
+                ...prevState, diocese: modalContent.diocese
+            }))
+
+            setIsModalOpen(true);
+            // successfulNotification();
+            // location.reload();
+
+            console.log('Show me the state: ', state);
+            console.log('Show me the qr code: ', modalContent);
+        } catch (error) {
+            // eventReservationUpdateNotification();
+
+
+        }
+
     }
 
     return (
@@ -81,7 +171,7 @@ export default function AllValidatedInvitationsClientComponent({ allValidatedInv
 
                                         <td className="text-right px-6 whitespace-nowrap">
                                             <a className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                            // onClick={() => viewInvitations(request)}
+                                                onClick={() => viewInvitations(request)}
                                             >
                                                 View
                                             </a>
@@ -95,55 +185,43 @@ export default function AllValidatedInvitationsClientComponent({ allValidatedInv
                         </tbody>
                     </table>
                 </div>
-
-                <div>
-                    {
-                        state ? (
-                            <div className="fixed inset-0 z-10 overflow-y-auto">
-                                <div className="fixed inset-0 w-full h-full bg-black opacity-40"
-                                    onClick={() => setState(false)}
-                                ></div>
-                                <div className="flex items-center min-h-screen px-4 py-8">
-                                    <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
-                                        <div className="flex items-center justify-between p-4 border-b">
-                                            <h4 className="text-lg font-medium text-gray-800">
-                                                Terms and agreements
-                                            </h4>
-                                            <button className="p-2 text-gray-400 rounded-md hover:bg-gray-100"
-                                            // onClick={() => setState(false)}
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 mx-auto" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500">
-                                            <p>
-                                                Commodo eget a et dignissim dignissim morbi vitae, mi. Mi aliquam sit ultrices enim cursus. Leo sapien, pretium duis est eu volutpat interdum eu non. Odio eget nullam elit laoreet. Libero at felis nam at orci venenatis rutrum nunc. Etiam mattis ornare pellentesque iaculis enim.
-                                            </p>
-                                            <p>
-                                                Felis eu non in aliquam egestas placerat. Eget maecenas ornare venenatis lacus nunc, sit arcu. Nam pharetra faucibus eget facilisis pulvinar eu sapien turpis at. Nec aliquam aliquam blandit eu ipsum.
-                                            </p>
-                                        </div>
-                                        <div className="flex items-center gap-3 p-4 mt-5 border-t">
-                                            <button className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
-                                                onClick={() => setState(true)}
-                                            >
-                                                Download
-                                            </button>
-                                            <button className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus:ring-2"
-                                                onClick={() => setState(false)}
-                                            >
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ) : ''
-                    }
-                </div>
             </div>
+
+            {isModalOpen && (
+                <div className="fixed inset-0 z-10 overflow-y-auto" style={{ width: "40%", position: "absolute" }}>
+                    <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setIsModalOpen(false)}></div>
+                    <div className="flex items-center min-h-screen px-4 py-8">
+                        <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
+                            <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500" style={{ textAlign: "center" }}>
+                                <h1>
+                                    {state.title}  {state.firstname} {state.surname}
+                                </h1>
+                                <h1>{state.email}</h1>
+                                <h1>{state.diocese}</h1>
+                            </div>
+
+                            <div className="" style={{ textAlign: "-webkit-center" }}>
+                                <QRCode value={modalContent.userid} />
+                            </div>
+
+                            <div className="flex items-center gap-3 p-4 mt-5 border-t" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                                <button
+                                    className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Download
+                                </button>
+                                <button
+                                    className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
+                                    onClick={() => setIsModalOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
