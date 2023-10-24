@@ -9,6 +9,19 @@ import supabase from './SupabaseClient';
 
 export default function AllValidationsClientComponent({ allValidations }: { allValidations: any }) {
 
+    // Search section
+    const [search, setSearch] = useState('');
+
+    const allValidationsAfterFilter = {
+        nodes: allValidations.filter((item: any) =>
+            item.userfirstname.toLowerCase().includes(search.toLowerCase())
+        ),
+    };
+
+    const handleSearch = (event: any) => {
+        setSearch(event.target.value);
+    };
+
     const selectedItem = useStore((state) => state.navigationState);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -122,6 +135,18 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                         <p className="text-gray-600 mt-2">
                             Search all validations here.
                         </p>
+
+                        <div>
+                            <label className="font-medium">
+                                The search is based on the first name
+                            </label>
+                            <input
+                                type="text"
+                                required
+                                className="w-full mt-2 px-3 py-2 text-gray-500 bg-transparent outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                                onChange={handleSearch}
+                            />
+                        </div>
                     </div>
                     <div className="mt-3 md:mt-0">
                         <a
@@ -153,7 +178,7 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                         </thead>
                         <tbody className="text-gray-600 divide-y">
                             {
-                                allValidations.map((request: any, idx: any) => (
+                                allValidationsAfterFilter.nodes.map((request: any, idx: any) => (
                                     <tr key={idx}>
                                         <td className="px-6 py-4 whitespace-nowrap">{request.id}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">{request.userlastname}</td>
