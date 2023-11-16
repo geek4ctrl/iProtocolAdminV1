@@ -172,12 +172,12 @@ export default function AllAccreditationsClientComponent({ allAccreditations }: 
 
                                         <td className="text-right px-6 whitespace-nowrap">
                                             <a className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                                onClick={() => approveRequest(request)}
+                                                onClick={() => approveRequest(request)} style={{ cursor: "pointer" }}
                                             >
                                                 Approve
                                             </a>
                                             <a className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                                onClick={() => rejectRequest(request)}
+                                                onClick={() => rejectRequest(request)} style={{ cursor: "pointer" }}
                                             >
                                                 Reject
                                             </a>

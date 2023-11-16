@@ -227,11 +227,11 @@ export default function AllValidatedInvitationsClientComponent({ allValidatedInv
 
                                         <td className="text-right px-6 whitespace-nowrap">
                                             <a className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                                onClick={() => viewInvitations(request)}
+                                                onClick={() => viewInvitations(request)} style={{ cursor: "pointer" }}
                                             >
                                                 View
                                             </a>
-                                            <a className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                            <a className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg" style={{ cursor: "pointer" }}>
                                                 Reject
                                             </a>
                                         </td>
