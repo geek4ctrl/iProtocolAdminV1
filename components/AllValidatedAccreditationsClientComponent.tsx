@@ -69,7 +69,7 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
 
     // Store QR Code here
 
-    const qrCodeContent = `https://i-protocol-control-v1.vercel.app/?userid=${modalContent.userid}+reservationType=${modalContent.reservationtype}+invitationstatus=${modalContent.invitationstatus}`
+    const qrCodeContent = `https://i-protocol-control-v1.vercel.app/?userId=${modalContent.userid}&reservationType=${modalContent.reservationtype}&invitationStatus=${modalContent.invitationstatus}`
 
     const viewInvitations = async (request: any) => {
 
