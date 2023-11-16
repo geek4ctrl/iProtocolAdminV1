@@ -6,6 +6,7 @@ import QRCode from 'react-qr-code';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import supabase from './SupabaseClient';
+import html2canvas from 'html2canvas';
 
 export default function AllValidationsClientComponent({ allValidations }: { allValidations: any }) {
 
@@ -145,6 +146,26 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
 
     }
 
+    // Download image
+
+    const downloadImage = () => {
+        const modalElement: any = document.getElementById("modal");
+
+        html2canvas(modalElement).then(function (canvas) {
+
+            // const downloadButton = document.getElementById("download");
+
+            const link = document.createElement('a');
+            link.download = 'modal.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+
+    const styles = {
+        border: '30px solid rgba(0, 0, 0, 0.05)',
+    };
+
     return (
 
         <>
@@ -280,27 +301,31 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                     <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setIsModalOpen(false)}></div>
                     <div className="flex items-center min-h-screen px-4 py-8">
                         <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
-                            <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500" style={{ textAlign: "center" }}>
-                                <h1>
-                                    {state.title}  {state.firstname} {state.surname}
-                                </h1>
-                                <h1>{state.email}</h1>
-                                <h1>{state.diocese}</h1>
-                            </div>
+                            <div id="modal" style={styles}>
+                                <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500" style={{ textAlign: "center" }}>
+                                    <h1>
+                                        {state.title}  {state.firstname} {state.surname}
+                                    </h1>
+                                    <h1>{state.email}</h1>
+                                    <h1>{state.diocese}</h1>
+                                </div>
 
-                            <div className="" style={{ textAlign: "-webkit-center" }}>
-                                <QRCode value={modalContent.userid} />
+                                <div className="" style={{ textAlign: "-webkit-center", paddingBottom: "3rem" }}>
+                                    <QRCode value={modalContent.userid} />
+                                </div>
                             </div>
 
                             <div className="flex items-center gap-3 p-4 mt-5 border-t" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
                                 <button
-                                    className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
-                                    onClick={() => setIsModalOpen(false)}
+                                    className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2" id="download"
+                                    style={{ padding: "1rem" }}
+                                    onClick={() => downloadImage()}
                                 >
                                     Download
                                 </button>
                                 <button
                                     className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
+                                    style={{ padding: "1rem" }}
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     Cancel
