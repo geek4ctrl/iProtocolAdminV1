@@ -12,7 +12,7 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
     // Search section
     const [search, setSearch] = useState('');
 
-    const allValidatedInvitationsAfterFilter = {
+    const allValidatedAccreditationsAfterFilter = {
         nodes: allValidatedAccreditations.filter((item: any) =>
             item.userfirstname.toLowerCase().includes(search.toLowerCase())
         ),
@@ -32,9 +32,9 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 
-    const currentRecords = allValidatedInvitationsAfterFilter.nodes.slice(indexOfFirstRecord, indexOfLastRecord);
+    const currentRecords = allValidatedAccreditationsAfterFilter.nodes.slice(indexOfFirstRecord, indexOfLastRecord);
 
-    const nPages = Math.ceil(allValidatedInvitationsAfterFilter.nodes.length / recordPerPage);
+    const nPages = Math.ceil(allValidatedAccreditationsAfterFilter.nodes.length / recordPerPage);
 
     const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
 
