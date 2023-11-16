@@ -67,6 +67,10 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
         userid: "bigey35353@ipniel.com"
     });
 
+    // Store QR Code here
+
+    const qrCodeContent = `https://i-protocol-control-v1.vercel.app/?userid=${modalContent.userid}+reservationType=${modalContent.reservationtype}+invitationstatus=${modalContent.invitationstatus}`
+
     const viewInvitations = async (request: any) => {
 
         console.log('Show me the selected request: ', request);
@@ -312,7 +316,7 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                                 </div>
 
                                 <div className="" style={{ textAlign: "-webkit-center", paddingBottom: "3rem" }}>
-                                    <QRCode value={modalContent.userid} />
+                                    <QRCode value={qrCodeContent} />
                                 </div>
                             </div>
 
