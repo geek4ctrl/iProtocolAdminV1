@@ -6,13 +6,14 @@ import QRCode from 'react-qr-code';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import supabase from './SupabaseClient';
+import html2canvas from 'html2canvas';
 
 export default function AllValidatedAccreditationsClientComponent({ allValidatedAccreditations }: { allValidatedAccreditations: any }) {
 
     // Search section
     const [search, setSearch] = useState('');
 
-    const allValidatedInvitationsAfterFilter = {
+    const allValidatedAccreditationsAfterFilter = {
         nodes: allValidatedAccreditations.filter((item: any) =>
             item.userfirstname.toLowerCase().includes(search.toLowerCase())
         ),
@@ -32,9 +33,9 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 
-    const currentRecords = allValidatedInvitationsAfterFilter.nodes.slice(indexOfFirstRecord, indexOfLastRecord);
+    const currentRecords = allValidatedAccreditationsAfterFilter.nodes.slice(indexOfFirstRecord, indexOfLastRecord);
 
-    const nPages = Math.ceil(allValidatedInvitationsAfterFilter.nodes.length / recordPerPage);
+    const nPages = Math.ceil(allValidatedAccreditationsAfterFilter.nodes.length / recordPerPage);
 
     const pageNumbers = [...Array(nPages + 1).keys()].slice(1);
 
@@ -146,6 +147,26 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
 
     }
 
+    // Download image
+
+    const downloadImage = () => {
+        const modalElement: any = document.getElementById("modal");
+
+        html2canvas(modalElement).then(function (canvas) {
+
+            // const downloadButton = document.getElementById("download");
+
+            const link = document.createElement('a');
+            link.download = 'modal.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    }
+
+    const styles = {
+        border: '30px solid rgba(0, 0, 0, 0.05)',
+    };
+
     return (
 
         <>
@@ -223,11 +244,11 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
 
                                         <td className="text-right px-6 whitespace-nowrap">
                                             <a className="py-2 px-3 font-medium text-indigo-600 hover:text-indigo-500 duration-150 hover:bg-gray-50 rounded-lg"
-                                                onClick={() => viewInvitations(request)}
+                                                onClick={() => viewInvitations(request)} style={{ cursor: "pointer" }}
                                             >
                                                 View
                                             </a>
-                                            <a className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg">
+                                            <a className="py-2 leading-none px-3 font-medium text-red-600 hover:text-red-500 duration-150 hover:bg-gray-50 rounded-lg" style={{ cursor: "pointer" }}>
                                                 Delete
                                             </a>
                                         </td>
@@ -281,27 +302,31 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                     <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setIsModalOpen(false)}></div>
                     <div className="flex items-center min-h-screen px-4 py-8">
                         <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
-                            <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500" style={{ textAlign: "center" }}>
-                                <h1>
-                                    {state.title}  {state.firstname} {state.surname}
-                                </h1>
-                                <h1>{state.email}</h1>
-                                <h1>{state.diocese}</h1>
-                            </div>
+                            <div id="modal" style={styles}>
+                                <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-gray-500" style={{ textAlign: "center" }}>
+                                    <h1>
+                                        {state.title}  {state.firstname} {state.surname}
+                                    </h1>
+                                    <h1>{state.email}</h1>
+                                    <h1>{state.diocese}</h1>
+                                </div>
 
-                            <div className="" style={{ textAlign: "-webkit-center" }}>
-                                <QRCode value={modalContent.userid} />
+                                <div className="" style={{ textAlign: "-webkit-center", paddingBottom: "3rem" }}>
+                                    <QRCode value={modalContent.userid} />
+                                </div>
                             </div>
 
                             <div className="flex items-center gap-3 p-4 mt-5 border-t" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
                                 <button
-                                    className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
-                                    onClick={() => setIsModalOpen(false)}
+                                    className="px-6 py-2 text-white bg-indigo-600 rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2" id="download"
+                                    style={{ padding: "1rem" }}
+                                    onClick={() => downloadImage()}
                                 >
                                     Download
                                 </button>
                                 <button
                                     className="px-6 py-2 text-gray-800 border rounded-md outline-none ring-offset-2 ring-indigo-600 focus-ring-2"
+                                    style={{ padding: "1rem" }}
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     Cancel
