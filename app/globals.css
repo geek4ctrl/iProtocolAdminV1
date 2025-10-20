@@ -55,3 +55,90 @@
     transform: translateY(0);
   }
 }
+
+/* Tab content transitions */
+.tab-content {
+  animation: fadeSlideIn 0.4s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobile-friendly table scrolling */
+.table-container {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar for tab navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Mobile responsive utilities */
+@media (max-width: 640px) {
+  .mobile-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .mobile-hidden {
+    display: none;
+  }
+  
+  /* Add fade indicator for scrollable tabs on mobile */
+  [role="tablist"] {
+    position: relative;
+  }
+  
+  [role="tablist"]::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 2px;
+    width: 30px;
+    background: linear-gradient(to right, transparent, var(--background));
+    pointer-events: none;
+  }
+  
+  [data-theme='light'] [role="tablist"]::after {
+    background: linear-gradient(to right, transparent, white);
+  }
+  
+  [data-theme='dark'] [role="tablist"]::after {
+    background: linear-gradient(to right, transparent, rgb(17, 24, 39));
+  }
+}
+
+/* Pulse animation for active elements */
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}

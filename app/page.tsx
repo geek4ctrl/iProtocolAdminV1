@@ -18,6 +18,7 @@ import AllAccreditationsClientComponent from '@/components/AllAccreditationsClie
 import AllInvitationsClientComponent from '@/components/AllInvitationsClientComponent';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import DashboardHeader from '@/components/DashboardHeader';
+import BackToTop from '@/components/BackToTop';
 
 export const dynamic = 'force-dynamic'
 
@@ -275,9 +276,9 @@ export default async function Index() {
         />
 
         {/* Tab Navigation */}
-        <div className="w-full flex flex-col items-center bg-white dark:bg-gray-900" style={{ marginBottom: "2rem", marginTop: "2rem" }}>
-          <div className="px-4 md:px-8">
-            <ul role="tablist" className="max-w-screen-xl mx-auto border-b-2 border-black dark:border-gray-700 flex items-center gap-x-6 overflow-x-auto text-sm">
+        <div className="w-full flex flex-col items-center bg-white dark:bg-gray-900" style={{ marginBottom: "1rem", marginTop: "1rem" }}>
+          <div className="w-full px-2 sm:px-4 md:px-8">
+            <ul role="tablist" className="max-w-screen-xl mx-auto border-b-2 border-black dark:border-gray-700 flex items-center gap-x-2 sm:gap-x-4 md:gap-x-6 overflow-x-auto text-sm scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               <TabNavItemClientComponent />
             </ul>
           </div>
@@ -295,6 +296,8 @@ export default async function Index() {
 
         <AllValidationsClientComponent allValidations={allValidations} />
 
+        {/* Back to Top Button */}
+        <BackToTop />
       </div>
 
       {/* <FooterComponent footerNavs={footerNavs} /> */}

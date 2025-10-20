@@ -83,7 +83,7 @@ export default function TabNavItemClientComponent() {
                     console.log(`Rendering item with index: ${idx} and name: ${item.name}`)
 
                     return (
-                        <li key={idx} className={`py-2 border-b-2 ${
+                        <li key={idx} className={`py-2 border-b-2 flex-shrink-0 ${
                             selectedItem == idx 
                             ? "border-black dark:border-white text-black dark:text-white" 
                             : "border-transparent text-gray-500 dark:text-gray-400"
@@ -92,15 +92,15 @@ export default function TabNavItemClientComponent() {
                                 role="tab"
                                 aria-selected={selectedItem == idx ? true : false}
                                 aria-controls={`tabpanel-${idx + 1}`}
-                                className={`flex items-center gap-x-2 py-2 px-2 rounded-lg duration-150 font-medium ${
+                                className={`flex items-center gap-x-1 sm:gap-x-2 py-2 px-2 sm:px-3 rounded-lg duration-150 font-medium text-xs sm:text-sm whitespace-nowrap ${
                                     selectedItem == idx 
                                     ? "text-black dark:text-white bg-gray-100 dark:bg-gray-800" 
                                     : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700"
                                 }`}
                                 onClick={() => setSelectedItem(idx)}
                             >
-                                {item.icon}
-                                {item.name}
+                                <span className="flex-shrink-0">{item.icon}</span>
+                                <span className="hidden sm:inline">{item.name}</span>
                             </button>
                         </li>
                     )

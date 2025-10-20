@@ -180,7 +180,7 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                 role="tabpanel"
                 aria-labelledby={`tab-${5}`}
                 hidden={selectedItem !== 5}
-                className="mx-auto px-4 md:px-8" style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+                className="tab-content mx-auto px-4 md:px-8" style={{ marginTop: "2rem", marginBottom: "2rem" }}>
                 <div className="items-start justify-between md:flex">
                     <div className="max-w-lg">
                         <h3 className="text-black dark:text-gray-100 text-xl font-bold sm:text-2xl">
@@ -190,14 +190,15 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                             Search all validations here.
                         </p>
 
-                        <div>
-                            <label className="font-medium text-gray-700 dark:text-gray-300">
+                        <div className="mt-3">
+                            <label className="font-medium text-gray-700 dark:text-gray-300 text-sm md:text-base">
                                 The search is based on the first name
                             </label>
                             <input
                                 type="text"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-black dark:text-white bg-white dark:bg-gray-800 outline-none border border-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-white shadow-sm rounded-lg"
+                                placeholder="Search by first name..."
+                                className="w-full mt-2 px-3 py-2 text-sm md:text-base text-black dark:text-white bg-white dark:bg-gray-800 outline-none border border-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-white shadow-sm rounded-lg"
                                 onChange={handleSearch}
                             />
                         </div>
@@ -205,7 +206,7 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                     <div className="mt-3 md:mt-0">
                         <a
                             href="javascript:void(0)"
-                            className="inline-block px-4 py-2 text-white dark:text-black duration-150 font-medium bg-black dark:bg-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 active:bg-gray-900 dark:active:bg-gray-300 md:text-sm"
+                            className="inline-block px-3 py-2 md:px-4 md:py-2 text-sm md:text-base text-white dark:text-black duration-150 font-medium bg-black dark:bg-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 active:bg-gray-900 dark:active:bg-gray-300"
                         >
                             Add member
                         </a>
@@ -226,8 +227,8 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
                     />
                 ) : (
                     <>
-                        <div className="mt-12 shadow-sm border border-gray-300 dark:border-gray-700 rounded-lg overflow-x-auto">
-                            <table className="w-full table-auto text-sm text-left">
+                        <div className="mt-12 shadow-sm border border-gray-300 dark:border-gray-700 rounded-lg overflow-x-auto table-container">
+                            <table className="w-full table-auto text-sm text-left min-w-[800px]">
                                 <thead className="bg-black dark:bg-gray-800 text-white font-medium border-b border-gray-300 dark:border-gray-700">
                                     <tr>
                                         <th className="py-3 px-6" style={{ textAlign: "left" }}>ID</th>
@@ -318,35 +319,33 @@ export default function AllValidationsClientComponent({ allValidations }: { allV
             </div>
 
             {isModalOpen && (
-                <div className="fixed inset-0 z-10 overflow-y-auto" style={{ width: "40%", position: "absolute" }}>
+                <div className="fixed inset-0 z-50 overflow-y-auto">
                     <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setIsModalOpen(false)}></div>
                     <div className="flex items-center min-h-screen px-4 py-8">
                         <div className="relative w-full max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-md shadow-lg">
                             <div id="modal" style={styles}>
-                                <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-black dark:text-white" style={{ textAlign: "center" }}>
-                                    <h1 className="font-bold text-lg">
+                                <div className="space-y-2 p-4 mt-3 text-sm md:text-[15.5px] leading-relaxed text-black dark:text-white" style={{ textAlign: "center" }}>
+                                    <h1 className="font-bold text-base md:text-lg">
                                         {state.title}  {state.firstname} {state.surname}
                                     </h1>
-                                    <h1>{state.email}</h1>
-                                    <h1>{state.diocese}</h1>
+                                    <h1 className="text-sm md:text-base">{state.email}</h1>
+                                    <h1 className="text-sm md:text-base">{state.diocese}</h1>
                                 </div>
 
                                 <div className="flex justify-center" style={{ paddingBottom: "3rem" }}>
-                                    <QRCode value={modalContent.userid} />
+                                    <QRCode value={modalContent.userid} size={200} />
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 p-4 mt-5 border-t border-gray-300 dark:border-gray-700" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                            <div className="flex flex-col sm:flex-row items-center gap-3 p-4 mt-5 border-t border-gray-300 dark:border-gray-700 justify-center">
                                 <button
-                                    className="px-6 py-2 text-white dark:text-black bg-black dark:bg-white rounded-md outline-none ring-offset-2 ring-black dark:ring-white focus:ring-2 hover:bg-gray-800 dark:hover:bg-gray-200" id="download"
-                                    style={{ padding: "1rem" }}
+                                    className="w-full sm:w-auto px-4 py-2 md:px-6 md:py-2 text-sm md:text-base text-white dark:text-black bg-black dark:bg-white rounded-md outline-none ring-offset-2 ring-black dark:ring-white focus:ring-2 hover:bg-gray-800 dark:hover:bg-gray-200" id="download"
                                     onClick={() => downloadImage()}
                                 >
                                     Download
                                 </button>
                                 <button
-                                    className="px-6 py-2 text-black dark:text-white border border-black dark:border-white rounded-md outline-none ring-offset-2 ring-black dark:ring-white focus:ring-2 hover:bg-gray-100 dark:hover:bg-gray-800"
-                                    style={{ padding: "1rem" }}
+                                    className="w-full sm:w-auto px-4 py-2 md:px-6 md:py-2 text-sm md:text-base text-black dark:text-white border border-black dark:border-white rounded-md outline-none ring-offset-2 ring-black dark:ring-white focus:ring-2 hover:bg-gray-100 dark:hover:bg-gray-800"
                                     onClick={() => setIsModalOpen(false)}
                                 >
                                     Cancel
