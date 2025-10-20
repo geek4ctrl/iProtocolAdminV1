@@ -188,21 +188,21 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                 className="mx-auto px-4 md:px-8" style={{ marginTop: "2rem" }}>
                 <div className="items-start justify-between md:flex">
                     <div className="max-w-lg">
-                        <h3 className="text-black text-xl font-bold sm:text-2xl">
+                        <h3 className="text-black dark:text-gray-100 text-xl font-bold sm:text-2xl">
                             ALL VALIDATED ACCREDITATIONS
                         </h3>
-                        <p className="text-gray-600 mt-2">
+                        <p className="text-gray-600 dark:text-gray-400 mt-2">
                             Search all validated accreditations here.
                         </p>
 
                         <div>
-                            <label className="font-medium text-black">
+                            <label className="font-medium text-gray-700 dark:text-gray-300">
                                 The search is based on the first name
                             </label>
                             <input
                                 type="text"
                                 required
-                                className="w-full mt-2 px-3 py-2 text-black bg-white outline-none border border-gray-300 focus:border-black shadow-sm rounded-lg"
+                                className="w-full mt-2 px-3 py-2 text-black dark:text-white bg-white dark:bg-gray-800 outline-none border border-gray-300 dark:border-gray-600 focus:border-black dark:focus:border-white shadow-sm rounded-lg"
                                 onChange={handleSearch}
                             />
                         </div>
@@ -210,7 +210,7 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                     <div className="mt-3 md:mt-0">
                         <a
                             href="javascript:void(0)"
-                            className="inline-block px-4 py-2 text-white duration-150 font-medium bg-black rounded-lg hover:bg-gray-800 active:bg-gray-900 md:text-sm"
+                            className="inline-block px-4 py-2 text-white dark:text-black duration-150 font-medium bg-black dark:bg-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-200 active:bg-gray-900 dark:active:bg-gray-300 md:text-sm"
                         >
                             Add member
                         </a>
@@ -231,9 +231,9 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                     />
                 ) : (
                     <>
-                        <div className="mt-12 shadow-sm border border-gray-300 rounded-lg overflow-x-auto">
+                        <div className="mt-12 shadow-sm border border-gray-300 dark:border-gray-700 rounded-lg overflow-x-auto">
                             <table className="w-full table-auto text-sm text-left">
-                                <thead className="bg-black text-white font-medium border-b border-gray-300">
+                                <thead className="bg-black dark:bg-gray-800 text-white font-medium border-b border-gray-300 dark:border-gray-700">
                                     <tr>
                                         <th className="py-3 px-6" style={{ textAlign: "left" }}>ID</th>
                                         <th className="py-3 px-6" style={{ textAlign: "left" }}>SURNAME</th>
@@ -249,7 +249,7 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                                         <th className="py-3 px-6" style={{ textAlign: "left" }}>VALIDATION</th>
                                     </tr>
                                 </thead>
-                                <tbody className="text-black divide-y divide-gray-200">
+                                <tbody className="text-black dark:text-gray-200 divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
                                     {
                                         currentRecords.map((request: any, idx: any) => (
                                             <tr key={idx}>
@@ -266,12 +266,12 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                                                 <td className="px-6 py-4 whitespace-nowrap">{request.invitationstatus}</td>
 
                                                 <td className="text-right px-6 whitespace-nowrap">
-                                                    <a className="py-2 px-3 font-medium text-black hover:text-gray-700 duration-150 hover:bg-gray-100 rounded-lg border border-black"
+                                                    <a className="py-2 px-3 font-medium text-black dark:text-white hover:text-gray-700 dark:hover:text-gray-300 duration-150 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg border border-black dark:border-white"
                                                         onClick={() => viewInvitations(request)} style={{ cursor: "pointer" }}
                                                     >
                                                         View
                                                     </a>
-                                                    <a className="py-2 leading-none px-3 font-medium text-white bg-black hover:bg-gray-800 duration-150 rounded-lg ml-2" style={{ cursor: "pointer" }}>
+                                                    <a className="py-2 leading-none px-3 font-medium text-white dark:text-black bg-black dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-200 duration-150 rounded-lg ml-2" style={{ cursor: "pointer" }}>
                                                         Delete
                                                     </a>
                                                 </td>
@@ -282,9 +282,9 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                             </table>
                         </div>
 
-                        <div className="max-w-screen-xl mx-auto mt-12 px-4 text-black md:px-8">
+                        <div className="max-w-screen-xl mx-auto mt-12 px-4 text-black dark:text-white md:px-8">
                             <div className="hidden items-center justify-between sm:flex" aria-label="Pagination">
-                                <a href="javascript:void(0)" className="hover:text-gray-700 flex items-center gap-x-2" onClick={goToPrevPage}>
+                                <a href="javascript:void(0)" className="hover:text-gray-700 dark:hover:text-gray-300 flex items-center gap-x-2" onClick={goToPrevPage}>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                         <path fillRule="evenodd" d="M18 10a.75.75 0 01-.75.75H4.66l2.1 1.95a.75.75 0 11-1.02 1.1l-3.5-3.25a.75.75 0 010-1.1l3.5-3.25a.75.75 0 111.02 1.1l-2.1 1.95h12.59A.75.75 0 0118 10z" clipRule="evenodd" />
                                     </svg>
@@ -295,7 +295,7 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                                             <li key={pgNumber}
                                                 className={`page-item ${currentPage == pgNumber ? 'active' : ''} `} >
 
-                                                <a aria-current={currentPage == pgNumber ? "page" : false} className={`page-link px-3 py-2 rounded-lg duration-150 hover:text-black hover:bg-gray-100 ${currentPage == pgNumber ? "bg-black text-white font-medium" : ""}`} onClick={() => setCurrentPage(pgNumber)} href='#'>
+                                                <a aria-current={currentPage == pgNumber ? "page" : false} className={`page-link px-3 py-2 rounded-lg duration-150 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-800 ${currentPage == pgNumber ? "bg-black dark:bg-white text-white dark:text-black font-medium" : ""}`} onClick={() => setCurrentPage(pgNumber)} href='#'>
 
                                                     {pgNumber}
                                                 </a>
@@ -303,18 +303,18 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                                         ))
                                     }
                                 </ul>
-                                <a href="javascript:void(0)" className="hover:text-gray-700 flex items-center gap-x-2">
+                                <a href="javascript:void(0)" className="hover:text-gray-700 dark:hover:text-gray-300 flex items-center gap-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
                                         <path fillRule="evenodd" d="M2 10a.75.75 0 01.75-.75h12.59l-2.1-1.95a.75.75 0 111.02-1.1l3.5 3.25a.75.75 0 010 1.1l-3.5 3.25a.75.75 0 11-1.02-1.1l2.1-1.95H2.75A.75.75 0 012 10z" clipRule="evenodd" />
                                     </svg>
                                 </a>
                             </div>
-                            <div className="flex items-center justify-between text-sm text-gray-600 font-medium sm:hidden">
-                                <a href="javascript:void(0)" className="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50" onClick={goToPrevPage}>Previous</a>
+                            <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 font-medium sm:hidden">
+                                <a href="javascript:void(0)" className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg duration-150 hover:bg-gray-50 dark:hover:bg-gray-800" onClick={goToPrevPage}>Previous</a>
                                 <div className="font-medium">
                                     {/* Page {currentPage} of {pages.length} */}
                                 </div>
-                                <a href="javascript:void(0)" className="px-4 py-2 border rounded-lg duration-150 hover:bg-gray-50" onClick={goToNextPage}>Next</a>
+                                <a href="javascript:void(0)" className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg duration-150 hover:bg-gray-50 dark:hover:bg-gray-800" onClick={goToNextPage}>Next</a>
                             </div>
                         </div>
                     </>
@@ -326,9 +326,9 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                 <div className="fixed inset-0 z-10 overflow-y-auto" style={{ width: "40%", position: "absolute" }}>
                     <div className="fixed inset-0 w-full h-full bg-black opacity-40" onClick={() => setIsModalOpen(false)}></div>
                     <div className="flex items-center min-h-screen px-4 py-8">
-                        <div className="relative w-full max-w-lg mx-auto bg-white rounded-md shadow-lg">
+                        <div className="relative w-full max-w-lg mx-auto bg-white dark:bg-gray-800 rounded-md shadow-lg">
                             <div id="modal" style={styles}>
-                                <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-black" style={{ textAlign: "center" }}>
+                                <div className="space-y-2 p-4 mt-3 text-[15.5px] leading-relaxed text-black dark:text-white" style={{ textAlign: "center" }}>
                                     <h1 className="font-bold text-lg">
                                         {state.title}  {state.firstname} {state.surname}
                                     </h1>
@@ -341,16 +341,16 @@ export default function AllValidatedAccreditationsClientComponent({ allValidated
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-3 p-4 mt-5 border-t" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                            <div className="flex items-center gap-3 p-4 mt-5 border-t border-gray-300 dark:border-gray-700" style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
                                 <button
-                                    className="px-6 py-2 text-white bg-black rounded-md outline-none ring-offset-2 ring-black focus:ring-2" id="download"
+                                    className="px-6 py-2 text-white dark:text-black bg-black dark:bg-white rounded-md outline-none ring-offset-2 ring-black dark:ring-white focus:ring-2 hover:bg-gray-800 dark:hover:bg-gray-200" id="download"
                                     style={{ padding: "1rem" }}
                                     onClick={() => downloadImage()}
                                 >
                                     Download
                                 </button>
                                 <button
-                                    className="px-6 py-2 text-black border border-black rounded-md outline-none ring-offset-2 ring-black focus:ring-2 hover:bg-gray-100"
+                                    className="px-6 py-2 text-black dark:text-white border border-black dark:border-white rounded-md outline-none ring-offset-2 ring-black dark:ring-white focus:ring-2 hover:bg-gray-100 dark:hover:bg-gray-800"
                                     style={{ padding: "1rem" }}
                                     onClick={() => setIsModalOpen(false)}
                                 >
