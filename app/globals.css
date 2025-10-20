@@ -3,26 +3,41 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 200 20% 98%;
-    --btn-background: 200 10% 91%;
-    --btn-background-hover: 200 10% 89%;
-    --foreground: 200 50% 3%;
+  /* Light Theme (Default) */
+  :root,
+  [data-theme='light'] {
+    --background: 0 0% 100%;           /* Pure white background */
+    --btn-background: 0 0% 0%;         /* Black buttons */
+    --btn-background-hover: 0 0% 20%;  /* Dark gray on hover */
+    --foreground: 0 0% 0%;             /* Black text */
+    --border: 0 0% 90%;                /* Light gray borders */
+    --card: 0 0% 98%;                  /* Off-white for cards */
+    --accent: 0 0% 15%;                /* Dark accent */
+    --muted: 0 0% 96%;                 /* Muted backgrounds */
+    --muted-foreground: 0 0% 40%;      /* Muted text */
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background: 200 50% 3%;
-      --btn-background: 200 10% 9%;
-      --btn-background-hover: 200 10% 12%;
-      --foreground: 200 20% 96%;
-    }
+  /* Dark Theme */
+  [data-theme='dark'] {
+    --background: 0 0% 10%;            /* Very dark gray (not pure black for comfort) */
+    --btn-background: 0 0% 100%;       /* White buttons */
+    --btn-background-hover: 0 0% 80%;  /* Light gray on hover */
+    --foreground: 0 0% 98%;            /* Almost white text */
+    --border: 0 0% 25%;                /* Dark gray borders */
+    --card: 0 0% 15%;                  /* Dark card background */
+    --accent: 0 0% 85%;                /* Light accent */
+    --muted: 0 0% 20%;                 /* Muted backgrounds */
+    --muted-foreground: 0 0% 65%;      /* Muted text */
   }
 }
 
 @layer base {
   * {
     @apply border-foreground/20;
+  }
+  
+  body {
+    @apply bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-200;
   }
 }
 

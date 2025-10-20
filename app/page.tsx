@@ -1,5 +1,6 @@
 import { createRouteHandlerClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { Suspense } from 'react'
 
 import { useStore } from '@/src/store';
 import StoreInitializer from '@/components/StoreInitializer';
@@ -15,6 +16,8 @@ import AllValidatedAccreditationsClientComponent from '@/components/AllValidated
 import AllValidatedInvitationsClientComponent from '@/components/AllValidatedInvitationsClientComponent';
 import AllAccreditationsClientComponent from '@/components/AllAccreditationsClientComponent';
 import AllInvitationsClientComponent from '@/components/AllInvitationsClientComponent';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import DashboardHeader from '@/components/DashboardHeader';
 
 export const dynamic = 'force-dynamic'
 
@@ -263,11 +266,18 @@ export default async function Index() {
     <>
       <StoreInitializer name={"Laurent"} place={allPlaces} event={allEventsToDisplay} navigationState={0} />
 
-      <div className="w-full flex flex-col items-center">
-        {/* <NavigationBar navigation={navigation} user={user} /> */}
-        <div className="w-full flex flex-col items-center" style={{ marginBottom: "2rem" }}>
+      <div className="w-full flex flex-col items-center bg-white dark:bg-gray-900">
+        {/* Header Section */}
+        <DashboardHeader 
+          userEmail={user?.email}
+          totalRequests={allRequests?.length || 0}
+          totalEvents={allEvents?.length || 0}
+        />
+
+        {/* Tab Navigation */}
+        <div className="w-full flex flex-col items-center bg-white dark:bg-gray-900" style={{ marginBottom: "2rem", marginTop: "2rem" }}>
           <div className="px-4 md:px-8">
-            <ul role="tablist" className="max-w-screen-xl mx-auto border-b flex items-center gap-x-6 overflow-x-auto text-sm">
+            <ul role="tablist" className="max-w-screen-xl mx-auto border-b-2 border-black dark:border-gray-700 flex items-center gap-x-6 overflow-x-auto text-sm">
               <TabNavItemClientComponent />
             </ul>
           </div>

@@ -1,5 +1,6 @@
 import './globals.css'
 import { Analytics } from '@vercel/analytics/react';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 export const dynamic = 'force-dynamic'
 
@@ -14,12 +15,30 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
-        <main className="min-h-screen bg-background flex flex-col items-center">
-          {children}
-          <Analytics />
-        </main>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('theme') || 
+                  (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="bg-white dark:bg-gray-900 text-black dark:text-white transition-colors duration-200">
+        <ThemeProvider>
+          <main className="min-h-screen bg-white dark:bg-gray-900 flex flex-col items-center">
+            {children}
+            <Analytics />
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   )
